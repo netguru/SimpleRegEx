@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "SimpleRegEx"
+version = "0.1.0"
+description = "Wrapper for RegEx, made so the RegEx code will be understable"
+authors = ["Dominik Dlugajczyk <dominik.dlugajczyk@netguru.com>"]
+license = "BSD"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.2.2"
+pytest-cov = "^4.0.0"
+ipython = "^8.11.0"
+icecream = "^2.1.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
