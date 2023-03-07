@@ -17,3 +17,29 @@ icecream = "^2.1.3"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+line_length = 80
+known_first_party = [ "SimpleRegEx" ]
+multi_line_output = 3
+sections = [ "FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+force_single_line = true
+
+[tool.black]
+line_length = 80
+target-version = [ "py38" ]
+ignore = [ "W503", "W504" ]
+
+[tool.pytest.ini_options]
+addopts = "--cov --cov-report term:skip-covered --cov-report html --no-cov-on-fail -vv --ff -x SimpleRegEx"
+norecursedirs = [ ".cache", ".git", ".idea", "bin", "*migrations*", "spa", "static", "var", "docker" ]
+filterwarnings = []
+
+[tool.coverage.run]
+branch = true
+omit = [
+    "*/tests/*",
+    "*/test_*/*",
+    "*/.cache/*",
+    "conftest.py",
+]
