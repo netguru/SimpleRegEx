@@ -18,6 +18,10 @@ def maybe(what: RegEx):
 
 def group(what: RegEx, name=None):
     what = copy(ensure_regex(what))
+    prefix = f"(?P<{name}>" if name else "("
+    what._patterns = [prefix, *what._patterns, ")"]
+    return what
+    what = copy(ensure_regex(what))
     what._patterns.insert(0, "(")
     what._patterns.append(")")
     if name:
