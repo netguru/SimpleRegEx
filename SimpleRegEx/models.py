@@ -32,4 +32,4 @@ def ensure_regex(obj):
     elif isinstance(obj, str):
         return RegEx(_patterns=[obj])
     else:
-        raise TypeError()
+        raise TypeError(f"RegEx or string is required, got {type(obj)}")
