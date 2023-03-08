@@ -9,6 +9,7 @@ class RegEx:
     _patterns: list = field(default_factory=list)
 
     def compile(self, flags=0):
+        return compile(self.pattern, flags)
         pattern = "".join(self._patterns)
         return compile(pattern, flags)
 
