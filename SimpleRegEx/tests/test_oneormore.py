@@ -1,4 +1,5 @@
-from SimpleRegEx.func import oneOrMore
+# -*- coding: utf-8 -*-
+from simpleregex.func import oneOrMore
 
 
 class TestOneormore:

@@ -1,4 +1,5 @@
-from SimpleRegEx.func import noneOrMany
+# -*- coding: utf-8 -*-
+from simpleregex.func import noneOrMany
 
 
 class TestNoneormany:

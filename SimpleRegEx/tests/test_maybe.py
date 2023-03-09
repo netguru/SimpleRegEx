@@ -1,4 +1,5 @@
-from SimpleRegEx.func import maybe
+# -*- coding: utf-8 -*-
+from simpleregex.func import maybe
 
 
 class TestMaybe:

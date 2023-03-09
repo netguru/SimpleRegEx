@@ -1,5 +1,6 @@
-from SimpleRegEx.models import RegEx
-from SimpleRegEx.models import ensure_regex
+# -*- coding: utf-8 -*-
+from simpleregex.models import ensure_regex
+from simpleregex.models import RegEx
 
 
 def noneOrMany(what: RegEx):

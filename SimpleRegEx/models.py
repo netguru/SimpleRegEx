@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from copy import deepcopy
 from dataclasses import dataclass
 from dataclasses import field
