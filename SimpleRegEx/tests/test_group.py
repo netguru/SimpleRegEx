@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from SimpleRegEx.func import group
+from simpleregex.func import group
 
 
 class TestGroup:

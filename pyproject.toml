@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "SimpleRegEx"
+name = "simpleregex"
 version = "0.1.0"
 description = "Wrapper for RegEx, made so the RegEx code will be understable"
 authors = ["Dominik Dlugajczyk <dominik.dlugajczyk@netguru.com>"]
@@ -20,7 +20,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.isort]
 line_length = 80
-known_first_party = [ "SimpleRegEx" ]
+known_first_party = [ "simpleregex" ]
 multi_line_output = 3
 sections = [ "FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
 force_single_line = true
@@ -31,7 +31,7 @@ target-version = [ "py38" ]
 ignore = [ "W503", "W504" ]
 
 [tool.pytest.ini_options]
-addopts = "--cov --cov-report term:skip-covered --cov-report html --no-cov-on-fail -vv --ff -x SimpleRegEx"
+addopts = "--cov --cov-report term:skip-covered --cov-report html --no-cov-on-fail -vv --ff -x simpleregex"
 norecursedirs = [ ".cache", ".git", ".idea", "bin", "*migrations*", "spa", "static", "var", "docker" ]
 filterwarnings = []
 

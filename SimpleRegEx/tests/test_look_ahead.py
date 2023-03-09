@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from SimpleRegEx.func import look_ahead
-from SimpleRegEx.models import RegEx
+from simpleregex.func import look_ahead
+from simpleregex.models import RegEx
 
 
 class TestLookAhead:

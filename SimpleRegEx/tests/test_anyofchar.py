@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from SimpleRegEx.func import anyOfChar
+from simpleregex.func import anyOfChar
 
 
 class TestanyOfChar:
