@@ -1,5 +1,3 @@
-from copy import copy
-
 from SimpleRegEx.models import RegEx
 from SimpleRegEx.models import ensure_regex
 
@@ -21,7 +19,7 @@ def anyOfChar(items: str):
 
 
 def _wrap_regex(what: RegEx, prefix: str, suffix: str):
-    what = copy(ensure_regex(what))
+    what = ensure_regex(what)
     what._patterns = [prefix, *what._patterns, suffix]
     return what
 

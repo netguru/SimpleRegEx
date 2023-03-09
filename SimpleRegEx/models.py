@@ -30,7 +30,7 @@ class RegEx:
 
 def ensure_regex(obj):
     if isinstance(obj, RegEx):
-        return obj
+        return deepcopy(obj)
     elif isinstance(obj, str):
         return RegEx(_patterns=[obj])
     else:
