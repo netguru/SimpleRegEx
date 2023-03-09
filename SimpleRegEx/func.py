@@ -16,18 +16,23 @@ def maybe(what: RegEx):
     return ensure_regex(what) + "?"
 
 
-def group(what: RegEx, name=None):
-    what = copy(ensure_regex(what))
-    prefix = f"(?P<{name}>" if name else "("
-    what._patterns = [prefix, *what._patterns, ")"]
-    return what
-    what = copy(ensure_regex(what))
-    what._patterns.insert(0, "(")
-    what._patterns.append(")")
-    if name:
-        what._patterns.insert(1, f"?P<{name}>")
-    return what
-
-
 def anyOfChar(items: str):
     return RegEx("[" + items + "]")
+
+
+def _wrap_regex(what: RegEx, prefix: str, suffix: str):
+    what = copy(ensure_regex(what))
+    what._patterns = [prefix, *what._patterns, suffix]
+    return what
+
+
+def group(what: RegEx, name=None):
+    return _wrap_regex(what, f"(?P<{name}>" if name else "(", ")")
+
+
+def look_ahead(what: RegEx, negative=False):
+    return _wrap_regex(what, f"(?!" if negative else "(?=", ")")
+
+
+def look_behind(what: RegEx, negative=False):
+    return _wrap_regex(what, f"(?<!" if negative else "(?<=", ")")

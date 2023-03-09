@@ -8,10 +8,12 @@ from re import compile
 class RegEx:
     _patterns: list = field(default_factory=list)
 
+    def __post_init__(self):
+        if isinstance(self._patterns, str):
+            self._patterns = [self._patterns]
+
     def compile(self, flags=0):
         return compile(self.pattern, flags)
-        pattern = "".join(self._patterns)
-        return compile(pattern, flags)
 
     @property
     def pattern(self):
