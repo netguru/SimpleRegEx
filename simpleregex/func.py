@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from simpleregex.models import ensure_regex
 from simpleregex.models import RegEx
+from simpleregex.models import ensure_regex
 
 
 def noneOrMany(what: RegEx):
@@ -35,3 +35,24 @@ def look_ahead(what: RegEx, negative=False):
 
 def look_behind(what: RegEx, negative=False):
     return _wrap_regex(what, f"(?<!" if negative else "(?<=", ")")
+
+
+def or_(left: RegEx, right: RegEx):
+    left = ensure_regex(left)
+    right = ensure_regex(right)
+    return left + "|" + right
+
+
+def times(what: RegEx, min: int, max: int = None):
+    """
+    Repeate a pattern between {min} and {max} times.
+    """
+    what = ensure_regex(what)
+    return what + (f"{{{min},}}" if max is None else f"{{{min},{max}}}")
+
+
+def repeat(what: RegEx, count: int):
+    """
+    Repeate a pattern {count} times.
+    """
+    return ensure_regex(what) + f"{{{count}}}"
