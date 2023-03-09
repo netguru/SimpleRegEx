@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from SimpleRegEx.func import noneOrMany
 
 

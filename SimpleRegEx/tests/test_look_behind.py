@@ -1,5 +1,6 @@
-from SimpleRegEx.models import RegEx
+# -*- coding: utf-8 -*-
 from SimpleRegEx.func import look_behind
+from SimpleRegEx.models import RegEx
 
 
 class TestLookBehind:

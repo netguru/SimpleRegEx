@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 from pytest import raises
 
-from SimpleRegEx.models import RegEx
 from SimpleRegEx.models import ensure_regex
+from SimpleRegEx.models import RegEx
 
 
 class TestRegex:

@@ -1,5 +1,6 @@
-from SimpleRegEx.models import RegEx
+# -*- coding: utf-8 -*-
 from SimpleRegEx.func import look_ahead
+from SimpleRegEx.models import RegEx
 
 
 class TestLookAhead:
@@ -21,9 +22,7 @@ class TestLookAhead:
         assert match is None
 
     def test_negative_lookahead(self):
-        regex = (
-            RegEx("Lorem ") + look_ahead("Ipsum", negative=True)
-        ).compile()
+        regex = (RegEx("Lorem ") + look_ahead("Ipsum", negative=True)).compile()
 
         assert regex.pattern == "Lorem (?!Ipsum)"
 
@@ -32,9 +31,7 @@ class TestLookAhead:
         assert match[0] == "Lorem "
 
     def test_negative_lookahead_not_found(self):
-        regex = (
-            RegEx("Lorem ") + look_ahead("Ipsum", negative=True)
-        ).compile()
+        regex = (RegEx("Lorem ") + look_ahead("Ipsum", negative=True)).compile()
 
         assert regex.pattern == "Lorem (?!Ipsum)"
 
