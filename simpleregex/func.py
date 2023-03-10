@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-from simpleregex.models import RegEx
+from typing import List
+from typing import Union
+
 from simpleregex.models import ensure_regex
+from simpleregex.models import RegEx
 
 
 def noneOrMany(what: RegEx):
@@ -41,6 +44,16 @@ def or_(left: RegEx, right: RegEx):
     left = ensure_regex(left)
     right = ensure_regex(right)
     return left + "|" + right
+
+
+def any_of(regex_list: List[Union[str, RegEx]]):
+    what = RegEx()
+    for index, item in enumerate(regex_list):
+        item = ensure_regex(item)
+        if index != 0:
+            what += "|"
+        what += item
+    return what
 
 
 def times(what: RegEx, min: int, max: int = None):
