@@ -23,12 +23,12 @@ def any_of_char(items: str):
 
 
 def regex_range(min: str, max: str):
-    return RegEx(f"[{min}-{max}]")
+    return RegEx(["[", str(min), "-", str(max), "]"])
 
 
 def _wrap_regex(what: RegEx, prefix: str, suffix: str):
     what = ensure_regex(what)
-    what._patterns = [prefix, *what._patterns, suffix]
+    what._patterns = [*list(prefix), *what._patterns, *list(suffix)]
     return what
 
 
@@ -82,3 +82,16 @@ def repeat(what: RegEx, count: int):
     Repeate a pattern {count} times.
     """
     return ensure_regex(what) + f"{{{count}}}"
+
+
+def negate(what: RegEx):
+    """
+    Negate either exact characters or ranges.
+    To Negate whole expressions use negative lookarounds.
+    """
+    what = ensure_regex(what)
+    if what._patterns[0] == "[":
+        what._patterns.insert(1, "^")
+        return what
+    else:
+        return _wrap_regex(what, f"[^", "]")

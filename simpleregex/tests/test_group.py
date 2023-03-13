@@ -13,3 +13,15 @@ class TestGroup:
         regex = group("abc", "meme").compile()
         result = regex.search("oneabcone").groupdict()
         assert result["meme"] == "abc"
+
+    def test_none_capturing_group(self):
+        regex = (
+            group("abc", "not_captured", non_capturing=True)
+            + group("one", "captured")
+        ).compile()
+
+        assert regex.pattern == "(?:abc)(?P<captured>one)"
+
+        result = regex.search("oneabcone").groupdict()
+        assert "not_captured" not in result
+        assert "captured" in result
