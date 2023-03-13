@@ -46,12 +46,6 @@ def look_behind(what: RegEx, negative=False):
     return _wrap_regex(what, f"(?<!" if negative else "(?<=", ")")
 
 
-def or_(left: RegEx, right: RegEx):
-    left = ensure_regex(left)
-    right = ensure_regex(right)
-    return left + "|" + right
-
-
 def any_of(regex_list: List[Union[str, RegEx]]):
     what = RegEx("(")
     for index, item in enumerate(regex_list):

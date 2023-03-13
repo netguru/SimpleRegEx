@@ -3,6 +3,7 @@ from copy import deepcopy
 from dataclasses import dataclass
 from dataclasses import field
 from re import compile
+from re import Pattern
 
 
 @dataclass
@@ -13,7 +14,7 @@ class RegEx:
         if isinstance(self._patterns, str):
             self._patterns = [self._patterns]
 
-    def compile(self, flags=0):
+    def compile(self, flags=0) -> Pattern:
         return compile(self.pattern, flags)
 
     @property
