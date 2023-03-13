@@ -47,13 +47,20 @@ def or_(left: RegEx, right: RegEx):
 
 
 def any_of(regex_list: List[Union[str, RegEx]]):
-    what = RegEx()
+    what = RegEx("(")
     for index, item in enumerate(regex_list):
         item = ensure_regex(item)
         if index != 0:
             what += "|"
         what += item
-    return what
+    return what + ")"
+
+
+def any_of_characters(regex_list: List[str]):
+    what = RegEx("[")
+    for item in regex_list:
+        what += ensure_regex(item)
+    return what + "]"
 
 
 def times(what: RegEx, min: int, max: int = None):
