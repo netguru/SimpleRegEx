@@ -10,9 +10,9 @@ class TestAnyOf:
 
         assert regex.pattern == "((Lorem)|(Ipsum)|Donor)"
 
-        match = regex.match("Lorem Ipsum Donor")
-        assert match is not None
-        assert match[0] == "Lorem"
+        re_match = regex.match("Lorem Ipsum Donor")
+        assert re_match is not None
+        assert re_match[0] == "Lorem"
 
     def test_any_of_multiple_groups_no_result(self):
         regex = any_of(["Sit", "Amet", "Consectetur"]).compile()
@@ -27,5 +27,5 @@ class TestAnyOf:
 
         assert regex.pattern == "Lorem (Ipsum|Donor)"
 
-        match = regex.match("Lorem ipsum dolor")
-        assert match is None
+        re_match = regex.match("Lorem ipsum dolor")
+        assert re_match is None

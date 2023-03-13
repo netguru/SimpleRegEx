@@ -6,11 +6,11 @@ from simpleregex.models import ensure_regex
 from simpleregex.models import RegEx
 
 
-def noneOrMany(what: RegEx):
+def none_or_many(what: RegEx):
     return ensure_regex(what) + "*"
 
 
-def oneOrMore(what: RegEx):
+def one_or_more(what: RegEx):
     return ensure_regex(what) + "+"
 
 
@@ -18,8 +18,12 @@ def maybe(what: RegEx):
     return ensure_regex(what) + "?"
 
 
-def anyOfChar(items: str):
+def any_of_char(items: str):
     return RegEx("[" + items + "]")
+
+
+def regex_range(min: str, max: str):
+    return RegEx(f"[{min}-{max}]")
 
 
 def _wrap_regex(what: RegEx, prefix: str, suffix: str):
@@ -28,7 +32,9 @@ def _wrap_regex(what: RegEx, prefix: str, suffix: str):
     return what
 
 
-def group(what: RegEx, name=None):
+def group(what: RegEx, name=None, non_capturing=False):
+    if non_capturing is True:
+        return _wrap_regex(what, "(?:", ")")
     return _wrap_regex(what, f"(?P<{name}>" if name else "(", ")")
 
 
@@ -68,7 +74,7 @@ def times(what: RegEx, min: int, max: int = None):
     Repeate a pattern between {min} and {max} times.
     """
     what = ensure_regex(what)
-    return what + (f"{{{min},}}" if max is None else f"{{{min},{max}}}")
+    return what + (f"{{{min}}}" if max is None else f"{{{min},{max}}}")
 
 
 def repeat(what: RegEx, count: int):

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from simpleregex.func import repeat
 
 
