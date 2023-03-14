@@ -8,16 +8,28 @@ commands: # a reusable command with parameters
             sudo apt-get install -y python3-pip
             sudo pip install poetry
             poetry install --no-ansi
+
 jobs:
-  test-py38: &test-template
+  test-py36: &test-template
     docker:
-      - image: cimg/python:3.8
+      - image: cimg/python:3.6
     steps:
       - checkout
       - prepare_env
       - run:
           command: |
             poetry run pytest simpleregex/tests/
+
+  test-py37:
+    <<: *test-template
+    docker:
+      - image: cimg/python:3.7
+
+  test-py38:
+    <<: *test-template
+    docker:
+      - image: cimg/python:3.8
+
   test-py39:
     <<: *test-template
     docker:
@@ -27,10 +39,12 @@ jobs:
     <<: *test-template
     docker:
       - image: cimg/python:3.10
+
   test-py311:
     <<: *test-template
     docker:
       - image: cimg/python:3.11
+
   test_pypi_publish:
     docker:
       - image: cimg/python:3.11
@@ -43,15 +57,20 @@ jobs:
             poetry config pypi-token.test-pypi $TEST_PYPI_TOKEN
             poetry build
             poetry publish -r test-pypi
+
 workflows:
   publish_test_pypi:
     jobs:
-      - test-py38
+      - test-py36
+      - test-py37
+      - test-py36
       - test-py39
       - test-py310
       - test-py311
       - test_pypi_publish:
           requires:
+            - test-py36
+            - test-py37
             - test-py38
             - test-py39
             - test-py310
