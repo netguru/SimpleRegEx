@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   test-py38: &test-template
     docker:
-      - image: circleci/python:3.8
+      - image: cimg/python:3.8
     steps:
       - checkout
       - run:
@@ -17,19 +17,19 @@ jobs:
   test-py39:
     <<: *test-template
     docker:
-      - image: circleci/python:3.9
+      - image: cimg/python:3.9
 
   test-py310:
     <<: *test-template
     docker:
-      - image: circleci/python:3.10
+      - image: cimg/python:3.10
   test-py311:
     <<: *test-template
     docker:
-      - image: circleci/python:3.11
+      - image: cimg/python:3.11
   test_pypi_publish:
     docker:
-      - image: cimg/python:3.10.10
+      - image: cimg/python:3.10
     steps:
       - checkout
       - run:
