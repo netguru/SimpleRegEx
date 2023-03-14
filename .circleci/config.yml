@@ -11,7 +11,7 @@ commands: # a reusable command with parameters
   configure_build:
     parameters:
       repository:
-        default: "test-pypi"
+        default: test-pypi
         type: string
     steps:
           command: |
