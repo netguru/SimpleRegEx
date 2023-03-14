@@ -14,7 +14,9 @@ commands: # a reusable command with parameters
         default: "test-pypi"
         type: string
     steps:
-      - run: echo "Hello <<parameters.repository>>"
+      - run:
+          command: |
+            poetry config repositories.<<parameters.repository>> https://test.pypi.org/legacy/
 
 jobs:
   test-py37: &test-template
