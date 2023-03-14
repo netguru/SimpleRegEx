@@ -74,7 +74,7 @@ def times(what: RegEx, min: int, max: int = None):
     Repeate a pattern between {min} and {max} times.
     """
     what = ensure_regex(what)
-    return what + (f"{{{min}}}" if max is None else f"{{{min},{max}}}")
+    return what + (f"{{{min},}}" if max is None else f"{{{min},{max}}}")
 
 
 def repeat(what: RegEx, count: int):
