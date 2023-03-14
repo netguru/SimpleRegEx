@@ -74,15 +74,49 @@ jobs:
             poetry version "$(poetry version -s).dev.${CIRCLE_BUILD_NUM}"
       - build_publish
 
+  pypi_publish:
+    docker:
+      - image: cimg/python:3.11
+    steps:
+      - checkout
+      - prepare_env
+      - configure_build:
+          repository: "pypi"
+          pypi_url: "https://pypi.org/"
+          pypi_token: "PYPI_TOKEN"
+      - run:
+          command: |
+            poetry version "$(poetry version -s).dev.${CIRCLE_BUILD_NUM}"
+      - build_publish
+
 workflows:
-  publish_test_pypi:
+  # publish_test_pypi:
+  #   jobs:
+  #     - test-py37
+  #     - test-py38
+  #     - test-py39
+  #     - test-py310
+  #     - test-py311
+  #     - test_pypi_publish:
+  #         requires:
+  #           - test-py37
+  #           - test-py38
+  #           - test-py39
+  #           - test-py310
+  #           - test-py311
+  #         filters:
+  #           branches:
+  #             only:
+  #               - feature/BN-4408
+
+  publish_pypi:
     jobs:
       - test-py37
       - test-py38
       - test-py39
       - test-py310
       - test-py311
-      - test_pypi_publish:
+      - pypi_publish:
           requires:
             - test-py37
             - test-py38
