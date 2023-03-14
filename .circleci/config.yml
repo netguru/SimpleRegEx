@@ -36,17 +36,18 @@ jobs:
           command: |
             echo "Hello World!"
 workflows:
-  run_tests:
+  publish_test_pypi:
     jobs:
       - test-py38
       - test-py39
       - test-py310
       - test-py311
-  publish_test_pypi:
-    jobs:
       - test_pypi_publish:
           requires:
-            - run_tests
+            - test-py38
+            - test-py39
+            - test-py310
+            - test-py311
           filters:
             branches:
               only:
