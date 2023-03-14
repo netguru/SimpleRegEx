@@ -71,7 +71,7 @@ jobs:
       - configure_build
       - run:
           command: |
-            poetry version "$(poetry version -s)+dev${CIRCLE_BUILD_NUM}"
+            poetry version "$(poetry version -s).dev${CIRCLE_BUILD_NUM}"
       - build_publish
 
 workflows:
