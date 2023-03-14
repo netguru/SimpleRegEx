@@ -46,7 +46,6 @@ jobs:
     steps:
       - checkout
       - prepare_env
-      - configure_build
       - run:
           command: |
               poetry config repositories.test-pypi https://test.pypi.org/legacy/
