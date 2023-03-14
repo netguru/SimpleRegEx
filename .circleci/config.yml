@@ -107,7 +107,7 @@ workflows:
           filters:
             branches:
               only:
-                - feature/BN-4413
+                - dev
       - pypi_publish:
           requires:
               - test-py37
