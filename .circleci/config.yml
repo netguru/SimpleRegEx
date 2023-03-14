@@ -86,7 +86,7 @@ jobs:
       - prepare_env
       - configure_build:
           repository: "pypi"
-          pypi_url: "https://pypi.org/"
+          pypi_url: "https://pypi.org/simple/"
           pypi_token: "PYPI_TOKEN"
       - run:
           command: |
