@@ -4,7 +4,9 @@ commands: # a reusable command with parameters
     steps:
       - run:
           command: | # poetry install --no-ansi due to cleo issue for petry >1.2.2 and circle python images < 3.11 https://github.com/python-poetry/poetry/issues/7184
-            sudo curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+            sudo apt-get update
+            sudo apt-get install -y python3-pip
+            sudo pip install poetry
             poetry install --no-ansi
 jobs:
   test-py38: &test-template
@@ -34,6 +36,7 @@ jobs:
       - image: cimg/python:3.11
     steps:
       - checkout
+      - prepare_env
       - run:
           command: |
             echo "Hello World!"
