@@ -25,11 +25,14 @@ commands: # a reusable command with parameters
             poetry config repositories.<<parameters.repository>> <<parameters.pypi_url>>
             poetry config pypi-token.<<parameters.repository>> $<<parameters.pypi_token>>
   build_publish:
+      repository:
+        default: "test-pypi"
+        type: string
     steps:
       - run:
           command: |
             poetry build
-            poetry publish -r test-pypi
+            poetry publish -r <<parameters.repository>>
 
 jobs:
   test-py37: &test-template
