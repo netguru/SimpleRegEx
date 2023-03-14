@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "simpleregex"
-version = "0.1.1"
+version = "0.1.0"
 description = "Wrapper for RegEx, made so the RegEx code will be understable"
 authors = ["Dominik Dlugajczyk <dominik.dlugajczyk@netguru.com>"]
 license = "BSD"
