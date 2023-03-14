@@ -8,32 +8,6 @@ commands: # a reusable command with parameters
             sudo apt-get install -y python3-pip
             sudo pip install 'poetry==1.4.0'
             poetry install --no-ansi
-  configure_build:
-    parameters:
-      repository:
-        default: "test-pypi"
-        type: string
-      pypi_url:
-        default: "https://test.pypi.org/legacy/"
-        type: string
-      pypi_token:
-        default: "TEST_PYPI_TOKEN"
-        type: string
-    steps:
-      - run:
-          command: |
-            poetry config repositories.<<parameters.repository>> <<parameters.pypi_url>>
-            poetry config pypi-token.<<parameters.repository>> $<<parameters.pypi_token>>
-  build_publish:
-    parameters:
-      repository:
-        default: "test-pypi"
-        type: string
-    steps:
-      - run:
-          command: |
-            poetry build
-            poetry publish -r <<parameters.repository>>
 
 jobs:
   test-py37: &test-template
@@ -75,8 +49,11 @@ jobs:
       - configure_build
       - run:
           command: |
-            poetry version "$(poetry version -s).dev.${CIRCLE_BUILD_NUM}"
-      - build_publish
+              poetry config repositories.test-pypi https://test.pypi.org/legacy/
+              poetry config pypi-token.test-pypi $TEST_PYPI_TOKEN
+              poetry version "$(poetry version -s).dev.${CIRCLE_BUILD_NUM}"
+              poetry build
+              poetry publish -r test-pypi
 
   pypi_publish:
     docker:
@@ -87,38 +64,18 @@ jobs:
       - run:
           command: |
               poetry config pypi-token.pypi $PYPI_TOKEN
-              poetry version "$(poetry version -s).dev.${CIRCLE_BUILD_NUM}"
               poetry build
               poetry publish
 
 workflows:
-  # publish_test_pypi:
-  #   jobs:
-  #     - test-py37
-  #     - test-py38
-  #     - test-py39
-  #     - test-py310
-  #     - test-py311
-  #     - test_pypi_publish:
-  #         requires:
-  #           - test-py37
-  #           - test-py38
-  #           - test-py39
-  #           - test-py310
-  #           - test-py311
-  #         filters:
-  #           branches:
-  #             only:
-  #               - feature/BN-4408
-
-  publish_pypi:
+  publish_test_pypi:
     jobs:
       - test-py37
       - test-py38
       - test-py39
       - test-py310
       - test-py311
-      - pypi_publish:
+      - test_pypi_publish:
           requires:
             - test-py37
             - test-py38
@@ -129,3 +86,22 @@ workflows:
             branches:
               only:
                 - feature/BN-4408
+
+  # publish_pypi:
+  #   jobs:
+  #     - test-py37
+  #     - test-py38
+  #     - test-py39
+  #     - test-py310
+  #     - test-py311
+  #     - pypi_publish:
+  #         requires:
+  #           - test-py37
+  #           - test-py38
+  #           - test-py39
+  #           - test-py310
+  #           - test-py311
+  #         filters:
+  #           branches:
+  #             only:
+  #               - feature/BN-4408
