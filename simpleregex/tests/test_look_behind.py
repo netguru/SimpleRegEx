@@ -9,17 +9,17 @@ class TestLookBehind:
 
         assert regex.pattern == "(?<=Lorem )Ipsum"
 
-        match = regex.search("Lorem Ipsum")
-        assert match is not None
-        assert match[0] == "Ipsum"
+        re_match = regex.search("Lorem Ipsum")
+        assert re_match is not None
+        assert re_match[0] == "Ipsum"
 
     def test_positive_lookbehind_not_found(self):
         regex = (look_behind("Lorem ") + RegEx("Ipsum")).compile()
 
         assert regex.pattern == "(?<=Lorem )Ipsum"
 
-        match = regex.search("Amet Ipsum")
-        assert match is None
+        re_match = regex.search("Amet Ipsum")
+        assert re_match is None
 
     def test_negative_lookbehind(self):
         regex = (
@@ -28,9 +28,9 @@ class TestLookBehind:
 
         assert regex.pattern == "(?<!Lorem )Ipsum"
 
-        match = regex.search("Amet Ipsum")
-        assert match is not None
-        assert match[0] == "Ipsum"
+        re_match = regex.search("Amet Ipsum")
+        assert re_match is not None
+        assert re_match[0] == "Ipsum"
 
     def test_negative_lookbehind_not_found(self):
         regex = (
@@ -39,5 +39,5 @@ class TestLookBehind:
 
         assert regex.pattern == "(?<!Lorem )Ipsum"
 
-        match = regex.search("Lorem Ipsum")
-        assert match is None
+        re_match = regex.search("Lorem Ipsum")
+        assert re_match is None
