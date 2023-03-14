@@ -84,23 +84,23 @@ workflows:
           filters:
             branches:
               only:
-                - feature/BN-4408
+                - dev
 
-  # publish_pypi:
-  #   jobs:
-  #     - test-py37
-  #     - test-py38
-  #     - test-py39
-  #     - test-py310
-  #     - test-py311
-  #     - pypi_publish:
-  #         requires:
-  #           - test-py37
-  #           - test-py38
-  #           - test-py39
-  #           - test-py310
-  #           - test-py311
-  #         filters:
-  #           branches:
-  #             only:
-  #               - feature/BN-4408
+  publish_pypi:
+    jobs:
+      - test-py37
+      - test-py38
+      - test-py39
+      - test-py310
+      - test-py311
+      - pypi_publish:
+          requires:
+            - test-py37
+            - test-py38
+            - test-py39
+            - test-py310
+            - test-py311
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
