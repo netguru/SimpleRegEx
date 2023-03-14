@@ -13,10 +13,17 @@ commands: # a reusable command with parameters
       repository:
         default: "test-pypi"
         type: string
+      pypi_url:
+        default: "https://test.pypi.org/legacy/"
+        type: string
+      pypi_token:
+        default: "TEST_PYPI_TOKEN"
+        type: string
     steps:
       - run:
           command: |
-            poetry config repositories.<<parameters.repository>> https://test.pypi.org/legacy/
+            poetry config repositories.<<parameters.repository>> <<parameters.pypi_url>>
+            poetry config pypi-token.<<parameters.repository>> <<parameters.pypi_token>>
 
 jobs:
   test-py37: &test-template
@@ -58,9 +65,7 @@ jobs:
       - configure_build
       - run:
           command: |
-            poetry config repositories.test-pypi https://test.pypi.org/legacy/
-            poetry config pypi-token.test-pypi $TEST_PYPI_TOKEN
-            poetry version "$(poetry version).dev${CIRCLE_BUILD_NUM}"
+            poetry version "$(poetry version)+dev${CIRCLE_BUILD_NUM}"
             poetry build
             poetry publish -r test-pypi
 
