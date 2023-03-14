@@ -6,7 +6,7 @@ commands: # a reusable command with parameters
           command: | # poetry install --no-ansi due to cleo issue for petry >1.2.2 and circle python images < 3.11 https://github.com/python-poetry/poetry/issues/7184
             sudo apt-get update
             sudo apt-get install -y python3-pip
-            sudo pip install poetry
+            sudo pip install poetry < 1.4.0
             poetry install --no-ansi
   configure_build:
     parameters:
@@ -71,7 +71,7 @@ jobs:
       - configure_build
       - run:
           command: |
-            poetry version "$(poetry version)+dev${CIRCLE_BUILD_NUM}.0.0"
+            poetry version "$(poetry version)+dev${CIRCLE_BUILD_NUM}"
       - build_publish
 
 workflows:
