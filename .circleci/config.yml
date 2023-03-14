@@ -1,16 +1,18 @@
 version: 2.1
+commands: # a reusable command with parameters
+  :
+    steps:
+      - run:
+          command: | # poetry install --no-ansi due to cleo issue for petry >1.2.2 and circle python images < 3.11 https://github.com/python-poetry/poetry/issues/7184
+            sudo curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+            poetry install --no-ansi
 jobs:
   test-py38: &test-template
     docker:
       - image: cimg/python:3.8
     steps:
       - checkout
-      - run:
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y python3-pip
-            sudo pip install poetry
-            poetry install --no-ansi
+      - prepare_env
       - run:
           command: |
             poetry run pytest simpleregex/tests/
@@ -29,7 +31,7 @@ jobs:
       - image: cimg/python:3.11
   test_pypi_publish:
     docker:
-      - image: cimg/python:3.10
+      - image: cimg/python:3.11
     steps:
       - checkout
       - run:
