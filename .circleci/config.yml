@@ -1,0 +1,35 @@
+version: 2.1
+jobs:
+  build_test:
+    docker:
+      - image: cimg/python:3.10.10
+    steps:
+      - checkout
+      - run:
+          command: |
+            sudo pip install poetry
+            poetry install
+            sudo apt-get update
+            sudo apt-get install -y tox
+      - run:
+          command: |
+            tox
+  test_pypi_publish:
+    docker:
+      - image: cimg/python:3.10.10
+    steps:
+      - checkout
+      - run:
+          command: |
+            echo "Hello World!"
+workflows:
+  build_test_publish:
+    jobs:
+      - build_test
+      - test_pypi_publish:
+          requires:
+            - build_test
+          filters:
+            branches:
+              only:
+                - feature/BN-4408
