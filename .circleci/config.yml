@@ -23,7 +23,13 @@ commands: # a reusable command with parameters
       - run:
           command: |
             poetry config repositories.<<parameters.repository>> <<parameters.pypi_url>>
-            poetry config pypi-token.<<parameters.repository>> <<parameters.pypi_token>>
+            poetry config pypi-token.<<parameters.repository>> $<<parameters.pypi_token>>
+  build_publish:
+    steps:
+      - run:
+          command: |
+            poetry build
+            poetry publish -r test-pypi
 
 jobs:
   test-py37: &test-template
@@ -65,9 +71,8 @@ jobs:
       - configure_build
       - run:
           command: |
-            poetry version "$(poetry version)+dev${CIRCLE_BUILD_NUM}"
-            poetry build
-            poetry publish -r test-pypi
+            poetry version "$(poetry version)+dev${CIRCLE_BUILD_NUM}.0.0"
+      - build_publish
 
 workflows:
   publish_test_pypi:
