@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  test-py3.8: &test-template
+  test-py38: &test-template
     docker:
       - image: circleci/python:3.8
     steps:
@@ -14,16 +14,16 @@ jobs:
       - run:
           command: |
             poetry run pytest simpleregex/tests/
-  test-py3.9:
+  test-py39:
     <<: *test-template
     docker:
       - image: circleci/python:3.9
 
-  test-py3.10:
+  test-py310:
     <<: *test-template
     docker:
       - image: circleci/python:3.10
-  test-py3.11:
+  test-py311:
     <<: *test-template
     docker:
       - image: circleci/python:3.11
@@ -38,10 +38,10 @@ jobs:
 workflows:
   run_tests:
     jobs:
-      - test-py3.8
-      - test-py3.9
-      - test-py3.10
-      - test-py3.11
+      - test-py38
+      - test-py39
+      - test-py310
+      - test-py311
   publish_test_pypi:
     jobs:
       - test_pypi_publish:
