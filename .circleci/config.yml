@@ -82,14 +82,17 @@ workflows:
       - test-py39
       - test-py310
       - test-py311
+      - run_tests:
+          requires:
+              - test-py37
+              - test-py38
+              - test-py39
+              - test-py310
+              - test-py311
       - test_pypi_publish:
           requires:
-            - test-py37
-            - test-py38
-            - test-py39
-            - test-py310
-            - test-py311
+            - run_tests
           filters:
             branches:
               only:
-                - feature/BN-4408
+                - feature/BN-4413
