@@ -25,11 +25,6 @@ multi_line_output = 3
 sections = [ "FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
 force_single_line = true
 
-[tool.black]
-line_length = 80
-target-version = [ "py38" ]
-ignore = [ "W503" ]
-
 [tool.pytest.ini_options]
 addopts = "--cov --cov-report term:skip-covered --cov-report html --no-cov-on-fail -vv --ff -x simpleregex/tests/"
 norecursedirs = [ ".cache", ".git", ".idea", "bin", "*migrations*", "spa", "static", "var", "docker" ]
@@ -47,6 +42,7 @@ omit = [
 [tool.tox]
 legacy_tox_ini = """
 [tox]
+isolated_build = True
 envlist =
     py311,
     py310,
