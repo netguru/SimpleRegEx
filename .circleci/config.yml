@@ -25,6 +25,7 @@ commands: # a reusable command with parameters
             poetry config repositories.<<parameters.repository>> <<parameters.pypi_url>>
             poetry config pypi-token.<<parameters.repository>> $<<parameters.pypi_token>>
   build_publish:
+    parameters:
       repository:
         default: "test-pypi"
         type: string
