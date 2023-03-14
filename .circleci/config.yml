@@ -97,17 +97,17 @@ workflows:
       - test-py39
       - test-py310
       - test-py311
-      - test_pypi_publish:
-          requires:
-              - test-py37
-              - test-py38
-              - test-py39
-              - test-py310
-              - test-py311
-          filters:
-            branches:
-              only:
-                - dev
+      # - test_pypi_publish:
+      #     requires:
+      #         - test-py37
+      #         - test-py38
+      #         - test-py39
+      #         - test-py310
+      #         - test-py311
+      #     filters:
+      #       branches:
+      #         only:
+      #           - dev
       - pypi_publish:
           requires:
               - test-py37
