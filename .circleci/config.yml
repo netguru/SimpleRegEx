@@ -84,15 +84,12 @@ jobs:
     steps:
       - checkout
       - prepare_env
-      - configure_build:
-          repository: "pypi"
-          pypi_url: "https://pypi.org/"
-          pypi_token: "PYPI_TOKEN"
       - run:
           command: |
-            poetry version "$(poetry version -s).dev.${CIRCLE_BUILD_NUM}"
-      - build_publish:
-          repository: "pypi"
+              poetry config pypi-token.pypi $PYPI_TOKEN
+              poetry version "$(poetry version -s).dev.${CIRCLE_BUILD_NUM}"
+              poetry build
+              poetry publish
 
 workflows:
   # publish_test_pypi:
