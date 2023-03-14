@@ -1,20 +1,32 @@
 version: 2.1
 jobs:
-  build_test:
+  test-py3.8: &test-template
     docker:
-      - image: cimg/python:3.10.10
+      - image: circleci/python:3.8
     steps:
       - checkout
       - run:
           command: |
             sudo apt-get update
-            sudo apt-get install -y tox
             sudo apt-get install -y python3-pip
             sudo pip install poetry
             poetry install
       - run:
           command: |
-            tox
+            poetry run pytest simpleregex/tests/
+  test-py3.9:
+    <<: *test-template
+    docker:
+      - image: circleci/python:3.9
+
+  test-py3.10:
+    <<: *test-template
+    docker:
+      - image: circleci/python:3.10
+  test-py3.11:
+    <<: *test-template
+    docker:
+      - image: circleci/python:3.11
   test_pypi_publish:
     docker:
       - image: cimg/python:3.10.10
@@ -24,12 +36,17 @@ jobs:
           command: |
             echo "Hello World!"
 workflows:
-  build_test_publish:
+  run_tests:
     jobs:
-      - build_test
+      - test-py3.8
+      - test-py3.9
+      - test-py3.10
+      - test-py3.11
+  publish_test_pypi:
+    jobs:
       - test_pypi_publish:
           requires:
-            - build_test
+            - run_tests
           filters:
             branches:
               only:
