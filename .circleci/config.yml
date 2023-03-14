@@ -91,7 +91,8 @@ jobs:
       - run:
           command: |
             poetry version "$(poetry version -s).dev.${CIRCLE_BUILD_NUM}"
-      - build_publish
+      - build_publish:
+          repository: "pypi"
 
 workflows:
   # publish_test_pypi:
