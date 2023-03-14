@@ -1,6 +1,6 @@
 version: 2.1
 commands: # a reusable command with parameters
-  :
+  prepare_env:
     steps:
       - run:
           command: | # poetry install --no-ansi due to cleo issue for petry >1.2.2 and circle python images < 3.11 https://github.com/python-poetry/poetry/issues/7184
