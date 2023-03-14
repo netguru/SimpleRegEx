@@ -8,22 +8,26 @@ commands: # a reusable command with parameters
             sudo apt-get install -y python3-pip
             sudo pip install poetry
             poetry install --no-ansi
+  configure_build:
+    parameters:
+      repository:
+        default: "test-pypi"
+        type: string
+    steps:
+          command: |
+            poetry config repositories.<<parameters.repository>> https://test.pypi.org/legacy/
+            poetry config pypi-token.<<parameters.repository>> $TEST_PYPI_TOKEN
 
 jobs:
-  test-py36: &test-template
+  test-py37: &test-template
     docker:
-      - image: cimg/python:3.6
+      - image: cimg/python:3.7
     steps:
       - checkout
       - prepare_env
       - run:
           command: |
             poetry run pytest simpleregex/tests/
-
-  test-py37:
-    <<: *test-template
-    docker:
-      - image: cimg/python:3.7
 
   test-py38:
     <<: *test-template
@@ -51,17 +55,16 @@ jobs:
     steps:
       - checkout
       - prepare_env
+      - configure_build
       - run:
           command: |
-            poetry config repositories.test-pypi https://test.pypi.org/legacy/
-            poetry config pypi-token.test-pypi $TEST_PYPI_TOKEN
+            poetry version "$(poetry version).dev${CIRCLE_BUILD_NUM}"
             poetry build
             poetry publish -r test-pypi
 
 workflows:
   publish_test_pypi:
     jobs:
-      - test-py36
       - test-py37
       - test-py38
       - test-py39
@@ -69,7 +72,6 @@ workflows:
       - test-py311
       - test_pypi_publish:
           requires:
-            - test-py36
             - test-py37
             - test-py38
             - test-py39
