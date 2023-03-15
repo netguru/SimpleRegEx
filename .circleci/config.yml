@@ -1,0 +1,105 @@
+version: 2.1
+commands: # a reusable command with parameters
+  prepare_env:
+    steps:
+      - run:
+          command: | # poetry install --no-ansi due to cleo issue for petry >1.2.2 and circle python images < 3.11 https://github.com/python-poetry/poetry/issues/7184
+            sudo apt-get update
+            sudo apt-get install -y python3-pip
+            sudo pip install 'poetry==1.4.0'
+            poetry install --no-ansi
+
+jobs:
+  test-py37: &test-template
+    docker:
+      - image: cimg/python:3.7
+    steps:
+      - checkout
+      - prepare_env
+      - run:
+          command: |
+            poetry run pytest simpleregex/tests/
+
+  test-py38:
+    <<: *test-template
+    docker:
+      - image: cimg/python:3.8
+
+  test-py39:
+    <<: *test-template
+    docker:
+      - image: cimg/python:3.9
+
+  test-py310:
+    <<: *test-template
+    docker:
+      - image: cimg/python:3.10
+
+  test-py311:
+    <<: *test-template
+    docker:
+      - image: cimg/python:3.11
+
+  test_pypi_publish:
+    docker:
+      - image: cimg/python:3.11
+    steps:
+      - checkout
+      - prepare_env
+      - run:
+          command: |
+              poetry config repositories.test-pypi https://test.pypi.org/legacy/
+              poetry config pypi-token.test-pypi $TEST_PYPI_TOKEN
+              poetry version "$(poetry version -s).dev.${CIRCLE_BUILD_NUM}"
+              poetry build
+              poetry publish -r test-pypi
+
+  pypi_publish:
+    docker:
+      - image: cimg/python:3.11
+    steps:
+      - checkout
+      - prepare_env
+      - run:
+          command: |
+              poetry config pypi-token.pypi $PYPI_TOKEN
+              poetry build
+              poetry publish
+
+workflows:
+  main:
+    jobs:
+      - test-py37
+      - test-py38
+      - test-py39
+      - test-py310
+      - test-py311
+      - hold:
+          type: approval
+          requires:
+            - test-py37
+            - test-py38
+            - test-py39
+            - test-py310
+            - test-py311
+          filters:
+            branches:
+              only:
+                - main
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
+      - test_pypi_publish:
+          requires:
+            - hold
+          filters:
+            branches:
+              only:
+                - main
+      - pypi_publish:
+          requires:
+            - hold
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
