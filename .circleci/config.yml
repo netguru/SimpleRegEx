@@ -96,22 +96,22 @@ workflows:
 
   publish_pypi:
     jobs:
-      - test-py37
+      - test-py37:
           filters: &filters-tag
             tags:
               only: /^v\d+\.\d+\.\d+$/
             branches:
               ignore: /.*/
-      - test-py38
+      - test-py38:
           filters:
             <<: *filters-tag
-      - test-py39
+      - test-py39:
           filters:
             <<: *filters-tag
-      - test-py310
+      - test-py310:
           filters:
             <<: *filters-tag
-      - test-py311
+      - test-py311:
           filters:
             <<: *filters-tag
       - pypi_publish:
