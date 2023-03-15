@@ -87,12 +87,12 @@ workflows:
         filters:
           <<: *filters-dev
       - test_pypi_publish:
-          requires:
-            - test-py37
-            - test-py38
-            - test-py39
-            - test-py310
-            - test-py311
+        requires:
+          - test-py37
+          - test-py38
+          - test-py39
+          - test-py310
+          - test-py311
         filters:
           <<: *filters-dev
 
@@ -117,11 +117,11 @@ workflows:
         filters:
           <<: *filters-tag
       - pypi_publish:
-          requires:
-            - test-py37
-            - test-py38
-            - test-py39
-            - test-py310
-            - test-py311
+        requires:
+          - test-py37
+          - test-py38
+          - test-py39
+          - test-py310
+          - test-py311
         filters:
           <<: *filters-tag
