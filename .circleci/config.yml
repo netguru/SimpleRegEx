@@ -70,7 +70,7 @@ workflows:
   publish_test_pypi:
     jobs:
       - test-py37
-        filters: &filters-dev
+        filters:
           branches:
             only:
               - dev
