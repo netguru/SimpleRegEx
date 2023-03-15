@@ -70,22 +70,22 @@ workflows:
   publish_test_pypi:
     jobs:
       - test-py37:
-        filters: &filters-dev
-          branches:
-            only:
-              - dev
+          filters: &filters-dev
+            branches:
+              only:
+                - dev
       - test-py38:
-        filters:
-          <<: *filters-dev
+          filters:
+            <<: *filters-dev
       - test-py39:
-        filters:
-          <<: *filters-dev
+          filters:
+            <<: *filters-dev
       - test-py310:
-        filters:
-          <<: *filters-dev
+          filters:
+            <<: *filters-dev
       - test-py311:
-        filters:
-          <<: *filters-dev
+          filters:
+            <<: *filters-dev
       - test_pypi_publish:
           requires:
             - test-py37
