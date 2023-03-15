@@ -62,11 +62,15 @@ Groups provided pattern `what`.
 
 ### `look_ahead(what: RegEx, negative=False) -> RegEx`
 
-TODO
+- `negative` - If false an positive lookahead is generated. If True an negative lookahead is generated.
+Assert if the certain pattern exists (or not) without actually matching it.
+Use after the pattern that you want to match.
 
 ### `look_behind(what: RegEx, negative=False) -> RegEx`
 
-TODO
+- `negative` - If false an positive lookabehind is generated. If True an negative lookabehind is generated.
+Assert if the certain pattern exists (or not) without actually matching it.
+Use before the pattern that you want to match.
 
 ### `any_of_characters(regex_list: List[str]) -> RegEx`
 
