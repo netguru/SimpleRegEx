@@ -17,8 +17,8 @@ jobs:
       - checkout
       - prepare_env
       - run:
-        command: |
-          poetry run pytest simpleregex/tests/
+          command: |
+            poetry run pytest simpleregex/tests/
 
   test-py38:
     <<: *test-template
@@ -47,12 +47,12 @@ jobs:
       - checkout
       - prepare_env
       - run:
-        command: |
-          poetry config repositories.test-pypi https://test.pypi.org/legacy/
-          poetry config pypi-token.test-pypi $TEST_PYPI_TOKEN
-          poetry version "$(poetry version -s).dev.${CIRCLE_BUILD_NUM}"
-          poetry build
-          poetry publish -r test-pypi
+          command: |
+              poetry config repositories.test-pypi https://test.pypi.org/legacy/
+              poetry config pypi-token.test-pypi $TEST_PYPI_TOKEN
+              poetry version "$(poetry version -s).dev.${CIRCLE_BUILD_NUM}"
+              poetry build
+              poetry publish -r test-pypi
 
   pypi_publish:
     docker:
@@ -61,10 +61,10 @@ jobs:
       - checkout
       - prepare_env
       - run:
-        command: |
-          poetry config pypi-token.pypi $PYPI_TOKEN
-          poetry build
-          poetry publish
+          command: |
+              poetry config pypi-token.pypi $PYPI_TOKEN
+              poetry build
+              poetry publish
 
 workflows:
   publish_test_pypi:
@@ -81,10 +81,10 @@ workflows:
             - test-py39
             - test-py310
             - test-py311
-        filters:
-          branches:
-            only:
-              - dev
+          filters:
+            branches:
+              only:
+                - dev
 
   publish_pypi:
     jobs:
@@ -100,8 +100,8 @@ workflows:
             - test-py39
             - test-py310
             - test-py311
-        filters:
-          tags:
-            only: /^v\d+\.\d+\.\d+$/
-          branches:
-            ignore: /.*/
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
