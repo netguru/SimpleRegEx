@@ -67,45 +67,13 @@ jobs:
               poetry publish
 
 workflows:
-  run_tests:
+  main:
     jobs:
-      - test-py37:
-          filters: &filters-tests
-            branches:
-              ignore:
-                - dev
-      - test-py38:
-          filters:
-            <<: *filters-tests
-      - test-py39:
-          filters:
-            <<: *filters-tests
-      - test-py310:
-          filters:
-            <<: *filters-tests
-      - test-py311:
-          filters:
-            <<: *filters-tests
-
-  publish_test_pypi:
-    jobs:
-      - test-py37:
-          filters: &filters-dev
-            branches:
-              only:
-                - dev
-      - test-py38:
-          filters:
-            <<: *filters-dev
-      - test-py39:
-          filters:
-            <<: *filters-dev
-      - test-py310:
-          filters:
-            <<: *filters-dev
-      - test-py311:
-          filters:
-            <<: *filters-dev
+      - test-py37
+      - test-py38
+      - test-py39
+      - test-py310
+      - test-py311
       - test_pypi_publish:
           requires:
             - test-py37
@@ -113,27 +81,10 @@ workflows:
             - test-py39
             - test-py310
             - test-py311
-
-  publish_pypi:
-    jobs:
-      - test-py37:
-          filters: &filters-tag
-            tags:
-              only: /^v\d+\.\d+\.\d+$/
+          filters:
             branches:
-              ignore: /.*/
-      - test-py38:
-          filters:
-            <<: *filters-tag
-      - test-py39:
-          filters:
-            <<: *filters-tag
-      - test-py310:
-          filters:
-            <<: *filters-tag
-      - test-py311:
-          filters:
-            <<: *filters-tag
+              only:
+                - dev
       - pypi_publish:
           requires:
             - test-py37
@@ -141,3 +92,8 @@ workflows:
             - test-py39
             - test-py310
             - test-py311
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
