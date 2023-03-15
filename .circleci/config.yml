@@ -85,7 +85,7 @@ workflows:
           filters:
             branches:
               only:
-                - feature/BN-4408
+                - main
             tags:
               only: /^v\d+\.\d+\.\d+$/
       - test_pypi_publish:
@@ -94,7 +94,7 @@ workflows:
           filters:
             branches:
               only:
-                - feature/BN-4408
+                - main
       - pypi_publish:
           requires:
             - hold
