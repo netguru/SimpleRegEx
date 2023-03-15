@@ -74,50 +74,50 @@ workflows:
           branches:
             only:
               - dev
-      - test-py38
-        filters:
-          <<: *filters-dev
-      - test-py39
-        filters:
-          <<: *filters-dev
-      - test-py310
-        filters:
-          <<: *filters-dev
-      - test-py311
-        filters:
-          <<: *filters-dev
-      - test_pypi_publish:
-          requires:
-            - test-py37
-            - test-py38
-            - test-py39
-            - test-py310
-            - test-py311
+      # - test-py38
+      #   filters:
+      #     <<: *filters-dev
+      # - test-py39
+      #   filters:
+      #     <<: *filters-dev
+      # - test-py310
+      #   filters:
+      #     <<: *filters-dev
+      # - test-py311
+      #   filters:
+      #     <<: *filters-dev
+      # - test_pypi_publish:
+      #     requires:
+      #       - test-py37
+      #       - test-py38
+      #       - test-py39
+      #       - test-py310
+      #       - test-py311
 
-  publish_pypi:
-    jobs:
-      - test-py37
-        filters: &filters-tag
-          tags:
-            only: /^v\d+\.\d+\.\d+$/
-          branches:
-            ignore: /.*/
-      - test-py38
-        filters:
-          <<: *filters-tag
-      - test-py39
-        filters:
-          <<: *filters-tag
-      - test-py310
-        filters:
-          <<: *filters-tag
-      - test-py311
-        filters:
-          <<: *filters-tag
-      - pypi_publish:
-          requires:
-            - test-py37
-            - test-py38
-            - test-py39
-            - test-py310
-            - test-py311
+  # publish_pypi:
+  #   jobs:
+  #     - test-py37
+  #       filters: &filters-tag
+  #         tags:
+  #           only: /^v\d+\.\d+\.\d+$/
+  #         branches:
+  #           ignore: /.*/
+  #     - test-py38
+  #       filters:
+  #         <<: *filters-tag
+  #     - test-py39
+  #       filters:
+  #         <<: *filters-tag
+  #     - test-py310
+  #       filters:
+  #         <<: *filters-tag
+  #     - test-py311
+  #       filters:
+  #         <<: *filters-tag
+  #     - pypi_publish:
+  #         requires:
+  #           - test-py37
+  #           - test-py38
+  #           - test-py39
+  #           - test-py310
+  #           - test-py311
