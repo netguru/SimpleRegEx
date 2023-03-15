@@ -18,10 +18,6 @@ def maybe(what: RegEx):
     return ensure_regex(what) + "?"
 
 
-def any_of_char(items: str):
-    return RegEx("[" + items + "]")
-
-
 def regex_range(min: str, max: str):
     return RegEx(["[", str(min), "-", str(max), "]"])
 
