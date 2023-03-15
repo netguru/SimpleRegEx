@@ -20,7 +20,7 @@ Also, every function is supporting RegEx object or strings.
 pattern = none_or_many('string')
 ```
 
-## RegEx Reference
+## RegEx Reference `simpleregex.models`
 
 ### `RegEx.compile() -> re.Pattern`
 
@@ -30,7 +30,7 @@ Returns compiled python re object.
 
 Returns pattern
 
-## Functions Reference
+## Functions Reference `simpleregex.func`
 
 ### `none_or_many(what: RegEx) -> RegEx`
 
@@ -89,4 +89,23 @@ Repeate a pattern {count} times.
 Negate either exact characters or ranges.
 To Negate whole expressions use negative lookarounds.
 
-## Consts Reference
+## Consts Reference `simpleregex.consts`
+
+- ANY_CHARACTER - `.`
+- BEGINING - `^` - beggining of a pattern/string
+- END - `$` - end of a pattern/string
+- NEW_LINE - `\n`
+- WORD - `\w` - Word characters (letters, numbers and underscores)
+- ALNUM - `:alnum:` - Alphanumeric characters
+- ALPHA - `:alpha:` - Alphabetic characters
+- ASCII - `:ascii:` - ASCII characters
+- BLANK - `:blank:` - Space and tab
+- CNTRL - `:cntrl:` - Control characters
+- DIGIT - `:digit:` - Digits
+- GRAPH - `:graph:` - Visible characters (anything except spaces and control characters)
+- LOWER - `:lower:` - Lowercase letters
+- PRINT - `:print:` - Visible characters and spaces (anything except control characters)
+- PUNCT - `:punct:` - Punctuation (and symbols).
+- SPACE - `:space:` - All whitespace characters, including line breaks
+- UPPER - `:upper:` - Uppercase letters
+- XDIGIT - `:xdigit:` - Hexadecimal digits

@@ -5,6 +5,8 @@ Readability counts. Even in regex.
 This tool is a wrapper for RegEx in python (`import re`), which introduces pattern
 functions in place of unreadable text patterns.
 
+This tool is inspired by the [Magic Regex](https://github.com/danielroe/magic-regexp) tool.
+
 [Documentation](./docs/index.md)
 
 # Support
