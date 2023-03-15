@@ -69,30 +69,30 @@ jobs:
 workflows:
   publish_test_pypi:
     jobs:
-      - test-py37
-        filters:
+      - test-py37:
+        filters: &filters-dev
           branches:
             only:
               - dev
-      # - test-py38
-      #   filters:
-      #     <<: *filters-dev
-      # - test-py39
-      #   filters:
-      #     <<: *filters-dev
-      # - test-py310
-      #   filters:
-      #     <<: *filters-dev
-      # - test-py311
-      #   filters:
-      #     <<: *filters-dev
-      # - test_pypi_publish:
-      #     requires:
-      #       - test-py37
-      #       - test-py38
-      #       - test-py39
-      #       - test-py310
-      #       - test-py311
+      - test-py38:
+        filters:
+          <<: *filters-dev
+      - test-py39:
+        filters:
+          <<: *filters-dev
+      - test-py310:
+        filters:
+          <<: *filters-dev
+      - test-py311:
+        filters:
+          <<: *filters-dev
+      - test_pypi_publish:
+          requires:
+            - test-py37
+            - test-py38
+            - test-py39
+            - test-py310
+            - test-py311
 
   # publish_pypi:
   #   jobs:
