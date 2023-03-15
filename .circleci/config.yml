@@ -67,6 +67,26 @@ jobs:
               poetry publish
 
 workflows:
+  run_tests:
+    jobs:
+      - test-py37:
+          filters: &filters-tests
+            branches:
+              ignore:
+                - dev
+      - test-py38:
+          filters:
+            <<: *filters-tests
+      - test-py39:
+          filters:
+            <<: *filters-tests
+      - test-py310:
+          filters:
+            <<: *filters-tests
+      - test-py311:
+          filters:
+            <<: *filters-tests
+
   publish_test_pypi:
     jobs:
       - test-py37:
