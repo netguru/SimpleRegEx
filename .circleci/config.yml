@@ -74,7 +74,8 @@ workflows:
       - test-py39
       - test-py310
       - test-py311
-      - all_tests:
+      - hold:
+          type: approval
           requires:
             - test-py37
             - test-py38
@@ -83,14 +84,14 @@ workflows:
             - test-py311
       - test_pypi_publish:
           requires:
-            - all_tests
+            - hold
           filters:
             branches:
               only:
                 - main
       - pypi_publish:
           requires:
-            - all_tests
+            - hold
           filters:
             tags:
               only: /^v\d+\.\d+\.\d+$/
