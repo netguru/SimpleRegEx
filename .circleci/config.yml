@@ -81,10 +81,10 @@ workflows:
             - test-py39
             - test-py310
             - test-py311
-          filters:
-            branches:
-              only:
-                - dev
+      filters:
+        branches:
+          only:
+            - dev
 
   publish_pypi:
     jobs:
