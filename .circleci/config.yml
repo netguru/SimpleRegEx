@@ -74,24 +74,23 @@ workflows:
       - test-py39
       - test-py310
       - test-py311
-      - test_pypi_publish:
+      - all_tests:
           requires:
             - test-py37
             - test-py38
             - test-py39
             - test-py310
             - test-py311
+      - test_pypi_publish:
+          requires:
+            - all_tests
           filters:
             branches:
               only:
-                - dev
+                - main
       - pypi_publish:
           requires:
-            - test-py37
-            - test-py38
-            - test-py39
-            - test-py310
-            - test-py311
+            - all_tests
           filters:
             tags:
               only: /^v\d+\.\d+\.\d+$/
