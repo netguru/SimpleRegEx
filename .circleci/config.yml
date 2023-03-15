@@ -93,8 +93,8 @@ workflows:
           - test-py39
           - test-py310
           - test-py311
-        filters:
-          <<: *filters-dev
+          filters:
+            <<: *filters-dev
 
   # publish_pypi:
   #   jobs:
