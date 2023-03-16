@@ -18,10 +18,6 @@ def maybe(what: RegEx):
     return ensure_regex(what) + "?"
 
 
-def any_of_char(items: str):
-    return RegEx("[" + items + "]")
-
-
 def regex_range(min: str, max: str):
     return RegEx(["[", str(min), "-", str(max), "]"])
 
@@ -44,12 +40,6 @@ def look_ahead(what: RegEx, negative=False):
 
 def look_behind(what: RegEx, negative=False):
     return _wrap_regex(what, f"(?<!" if negative else "(?<=", ")")
-
-
-def or_(left: RegEx, right: RegEx):
-    left = ensure_regex(left)
-    right = ensure_regex(right)
-    return left + "|" + right
 
 
 def any_of(regex_list: List[Union[str, RegEx]]):
