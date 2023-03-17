@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 from pytest import raises
 
-from SimpleRegEx.models import RegEx
-from SimpleRegEx.models import ensure_regex
+from simpleregex.models import ensure_regex
+from simpleregex.models import RegEx
 
 
 class TestRegex:
@@ -27,10 +28,12 @@ class TestRegex:
 class TestEnsureRegex:
     def test_when_regex(self):
         """
-        When object is a RegEx, return it.
+        When object is a RegEx, copy it.
         """
         left = RegEx()
-        assert id(ensure_regex(left)) == id(left)
+        right = ensure_regex(left)
+        assert isinstance(right, RegEx)
+        assert left._patterns == right._patterns
 
     def test_when_str(self):
         """
