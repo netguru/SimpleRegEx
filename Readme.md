@@ -1,4 +1,4 @@
-# SimpleRegEx
+# SimpleRegEx [![<Netguru>](https://circleci.com/gh/netguru/SimpleRegEx.svg?style=svg)](<https://app.circleci.com/pipelines/github/netguru/SimpleRegEx>)
 
 Readability counts. Even in regex.
 
