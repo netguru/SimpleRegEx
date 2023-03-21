@@ -40,7 +40,7 @@ Provided pattern can occure many times or not at all.
 
 Provided pattern can occure at lest once
 
-### `maybe(what: RegEx) -> RegEx`
+### `none_or_one(what: RegEx) -> RegEx`
 
 Provided pattern can occure once (but not more) or not at all.
 

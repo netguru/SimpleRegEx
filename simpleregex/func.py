@@ -14,7 +14,7 @@ def one_or_more(what: RegEx):
     return ensure_regex(what) + "+"
 
 
-def maybe(what: RegEx):
+def none_or_one(what: RegEx):
     return ensure_regex(what) + "?"
 
 
@@ -42,20 +42,23 @@ def look_behind(what: RegEx, negative=False):
     return _wrap_regex(what, f"(?<!" if negative else "(?<=", ")")
 
 
-def any_of(regex_list: List[Union[str, RegEx]]):
-    what = RegEx("(")
+def regex_or(regex_list: List[Union[str, RegEx]]):
+    what = RegEx()
     for index, item in enumerate(regex_list):
         item = ensure_regex(item)
         if index != 0:
             what += "|"
         what += item
-    return what + ")"
+    return what
 
 
 def any_of_characters(regex_list: List[str]):
     what = RegEx("[")
     for item in regex_list:
-        what += ensure_regex(item)
+        if isinstance(item, RegEx) and item._patterns[0] == "[":
+            what += ensure_regex(RegEx(item._patterns[1:-1]))
+        else:
+            what += ensure_regex(item)
     return what + "]"
 
 
