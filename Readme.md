@@ -1,13 +1,56 @@
-# SimpleRegEx [![<Netguru>](https://circleci.com/gh/netguru/SimpleRegEx.svg?style=svg)](<https://app.circleci.com/pipelines/github/netguru/SimpleRegEx>)
+<div align="center">
+  <h1>Simple RegEx</h1>
+</div>
 
-Readability counts. Even in regex.
+<div align="center">
+    <image src="https://circleci.com/gh/netguru/SimpleRegEx.svg?style=svg"/>
+</div>
+
+<div align="center">
+  <br/><em>Brought with</em> &nbsp;❤️ <em>by</em> &nbsp; <a href="https://www.netguru.com"><img align="center" alt="Netguru logo" src='./docs/readme_netguru_logo.png' width='30'/></a>
+</div>
+
+# Introduction
+
+<p align="center">
+  Readability counts. Even in regex.
+</p>
+
+<div align="center">
+  <a href="./docs/index.md">Documentation</a> &nbsp;|&nbsp; <a href="#About">About</a> &nbsp;|&nbsp; <a href="#Installation">Installation</a> &nbsp;|&nbsp; <a href="./docs/CONTRIBUTING.md">Contributing</a> &nbsp;
+</div>
+
+# About
 
 This tool is a wrapper for RegEx in python (`import re`), which introduces pattern
 functions in place of unreadable text patterns.
 
 This tool is inspired by the [Magic Regex](https://github.com/danielroe/magic-regexp) tool.
 
-[Documentation](./docs/index.md)
+# In Use
+
+```python
+pattern = (
+    RegEx("\\.")
+    + SPACE
+    + group(
+        noneOrMany(any_of_characters([WORD, SPACE]))
+        + "Przem"
+        + any_of(["ysław", "ek", "ka"])
+        + SPACE
+        + "Mazur"
+        + any_of(["ek", "ka"])
+        + noneOrMany(any_of_characters([WORD, SPACE]))
+    )
+    + RegEx("\\.")
+)
+```
+
+# Installation
+
+```
+pip install simpleregex
+```
 
 # Support
 
@@ -16,36 +59,3 @@ This tool is inspired by the [Magic Regex](https://github.com/danielroe/magic-re
  - 3.10
  - 3.9
  - 3.8
-
-# Development
-pre-commit hook is added and configured for this project. Before commiting your first changes please run:
-```bash
-pre-commit install
-```
-
-
-## Local setup
-This project uses poetry as a package management tool, make sure you have it installed and added to path. Once that's done run:
-```bash
-poetry install
-```
-
-
-## Running tests
-### Make sure you have tox installed
-MacOS
-```bash
-brew install tox
-```
-Linux
-```bash
-apt-get install tox
-```
-#### Run tests for all supported python versions
-```bash
-tox
-```
-#### Run tests for a selected python version
-```bash
-tox -e py310
-```
