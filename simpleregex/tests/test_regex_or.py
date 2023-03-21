@@ -19,13 +19,15 @@ class TestAnyOf:
 
         assert regex.pattern == "Sit|Amet|Consectetur"
 
-        match = regex.match("Lorem ipsum donor")
+        match = regex.match("Lorem Ipsum Donor")
         assert match is None
 
     def test_regex_or_multiple_groups_after_string(self):
-        regex = (RegEx("Lorem ") + regex_or(["Ipsum", "Donor"])).compile()
+        regex = (
+            RegEx("Lorem ") + group(regex_or(["Ipsum", "Donor"]))
+        ).compile()
 
-        assert regex.pattern == "Lorem Ipsum|Donor"
+        assert regex.pattern == "Lorem (Ipsum|Donor)"
 
-        re_match = regex.match("Lorem ipsum donor")
-        assert re_match is None
+        re_match = regex.match("Lorem Donor Ipsum")
+        assert re_match[0] == "Lorem Donor"
