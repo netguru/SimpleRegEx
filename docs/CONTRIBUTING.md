@@ -34,20 +34,16 @@ tox -e py310
 
 ## Code structure
 ```
-simpleregext/
+simpleregex/
 ├──code
 docs/
 ├──documentation
 ```
 
 ## Code Style
-* Make sure to install pre-commit hook
+* Linting rules are defined in `.pre-commit-config.yaml` and enforced by pre-commit hook. Make sure you have it installed before commiting.
   ```sh
   pre-commit install
   ```
 
-* Make sure you are using linter with linting rules defined in ESLint config (.eslintrc.js)
-* Name branch according to your ticket following this pattern: RNS-XX-short_description
-* Imports and exports inside `index.tsx` files eg. `screens/index.tsx`, `components/index.tsx` should be sorted alphabetically
-* Style names should be ordered alphabetically
-* Please use commit lint and follow commit naming convention (https://www.conventionalcommits.org/en/v1.0.0/)
+* Name branch according to your ticket following this pattern: (feature/bugfix)/BN-XXX-short_description
