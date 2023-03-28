@@ -4,7 +4,7 @@ from simpleregex.func import regex_or
 from simpleregex.models import RegEx
 
 
-class TestAnyOf:
+class TestRegexOr:
     def test_regex_or_multiple_groups(self):
         regex = regex_or([group("Lorem"), group("Ipsum"), "Donor"]).compile()
 
