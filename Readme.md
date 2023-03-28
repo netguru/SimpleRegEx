@@ -29,28 +29,20 @@ This tool is inspired by the [Magic Regex](https://github.com/danielroe/magic-re
 
 # In Use
 
-```python
-pattern = (
-    RegEx("\\.")
-    + SPACE
-    + group(
-        noneOrMany(any_of_characters([WORD, SPACE]))
-        + "Przem"
-        + any_of(["ysław", "ek", "ka"])
-        + SPACE
-        + "Mazur"
-        + any_of(["ek", "ka"])
-        + noneOrMany(any_of_characters([WORD, SPACE]))
-    )
-    + RegEx("\\.")
-)
-```
+Usege example can be found in [unit tests](https://github.com/netguru/SimpleRegEx/blob/main/simpleregex/tests/test_email.py).
 
 # Installation
 
 ```
 pip install simpleregex
 ```
+
+# Release
+To bump a package version use poetry. Examples can be found in [potry docs](https://python-poetry.org/docs/cli/#version).
+
+The release process is automated on circle ci.
+Merge to main branch will deploy automated release to test.pypi.org.
+To release the new package version to pypi.org create a tag for selected version `v\d+\.\d+\.\d+`.
 
 # Support
 
