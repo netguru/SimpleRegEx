@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup_info = dict(
-    name='Simple RegEx',
+    name='simpleregex',
     version='0.1.2',
     author='Netguru',
     author_email='hello@netguru.com',
@@ -12,8 +12,7 @@ setup_info = dict(
         'Source': 'https://github.com/netguru/SimpleRegEx',
         'Tracker': 'https://github.com/netguru/SimpleRegEx/issues',
     },
-    description='This tool is a wrapper for RegEx in Python, '
-                'which introduces pattern functions in place of unreadable text patterns.',
+    description='Wrapper for RegEx, made so the RegEx code will be understandable',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     license='BSD-3-Clause',
