@@ -7,7 +7,7 @@ commands: # a reusable command with parameters
             sudo apt-get update
             sudo apt-get install -y python3-pip
             sudo pip install --user --upgrade setuptools wheel twine
-            sudo pip install 'pytest==^7.2.2' 'pytest-cov=^4.0.0' 'ipython==^8.11.0' 'icecream==^2.1.3'
+            sudo pip install 'pytest==^7.2.2' 'pytest-cov==^4.0.0' 'ipython==^8.11.0' 'icecream==^2.1.3'
             
 
 jobs:
