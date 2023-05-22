@@ -60,7 +60,7 @@ jobs:
           command: |
             . venv/bin/activate
             python3 -m build .
-            python3 -m twine upload -r testpypi dist/*
+            python3 -m twine upload -r testpypi dist/* --verbose
 
   pypi_publish:
     docker:
