@@ -3,12 +3,12 @@ commands: # a reusable command with parameters
   prepare_env:
     steps:
       - run:
-          command: | # poetry install --no-ansi due to cleo issue for petry >1.2.2 and circle python images < 3.11 https://github.com/python-poetry/poetry/issues/7184
+          command: |
             sudo apt-get update
             sudo apt-get install -y python3-pip
-            sudo pip install --user --upgrade setuptools wheel twine
+            sudo pip install --user --upgrade setuptools wheel twine build
             sudo pip install pytest pytest-cov ipython icecream
-            
+
 
 jobs:
   test-py37: &test-template
@@ -49,8 +49,8 @@ jobs:
       - prepare_env
       - run:
           command: |
-              python3 -m build .
-              python3 -m twine upload -r pypi/testpypi dist/*
+            python3 -m build .
+            python3 -m twine upload -r testpypi dist/*
 
   pypi_publish:
     docker:
@@ -60,8 +60,8 @@ jobs:
       - prepare_env
       - run:
           command: |
-              python3 -m build .
-              python3 -m twine upload -r pypi/testpypi dist/*
+            python3 -m build .
+            python3 -m twine upload -r pypi dist/*
 
 workflows:
   main:
@@ -92,6 +92,7 @@ workflows:
             branches:
               only:
                 - main
+                - bugfix/BN-4517
       - pypi_publish:
           requires:
             - hold
