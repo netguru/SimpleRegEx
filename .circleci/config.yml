@@ -21,6 +21,7 @@ jobs:
       - prepare_env
       - run:
           command: |
+            . venv/bin/activate
             pytest simpleregex/tests/
 
   test-py38:
