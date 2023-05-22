@@ -96,7 +96,6 @@ workflows:
             branches:
               only:
                 - main
-                - bugfix/BN-4517
             tags:
               only: /^v\d+\.\d+\.\d+$/
       - test_pypi_publish:
@@ -106,7 +105,6 @@ workflows:
             branches:
               only:
                 - main
-                - bugfix/BN-4517
       - pypi_publish:
           requires:
             - hold
