@@ -47,9 +47,16 @@ jobs:
   test_pypi_publish:
     docker:
       - image: cimg/python:3.11
+    environment:
+      PYPI_TOKEN: $PYPI_TOKEN
+      TEST_PYPI_TOKEN: $TEST_PYPI_TOKEN
     steps:
       - checkout
       - prepare_env
+      - run:
+          name: Generate .pypirc
+          command: |
+            echo -e "[distutils]\nindex-servers =\n    pypi\n\n[testpypi]\nusername: __token__\npassword: $TEST_PYPI_TOKEN" > ~/.pypirc
       - run:
           command: |
             . venv/bin/activate
@@ -62,6 +69,10 @@ jobs:
     steps:
       - checkout
       - prepare_env
+      - run:
+          name: Generate .pypirc
+          command: |
+            echo -e "[distutils]\nindex-servers =\n    pypi\n\n[pypi]\nusername: __token__\npassword: $PYPI_TOKEN" > ~/.pypirc
       - run:
           command: |
             . venv/bin/activate
