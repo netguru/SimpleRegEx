@@ -83,6 +83,7 @@ workflows:
             branches:
               only:
                 - main
+                - bugfix/BN-4517
             tags:
               only: /^v\d+\.\d+\.\d+$/
       - test_pypi_publish:
