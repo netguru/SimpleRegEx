@@ -6,8 +6,8 @@ commands: # a reusable command with parameters
           command: |
             sudo apt-get update
             sudo apt-get install -y python3-pip
-            sudo pip install --user --upgrade setuptools wheel twine build
-            sudo pip install pytest pytest-cov ipython icecream
+            sudo pip install --user --upgrade setuptools wheel twine
+            sudo pip install build pytest pytest-cov ipython icecream
 
 
 jobs:
