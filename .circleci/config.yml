@@ -6,8 +6,9 @@ commands: # a reusable command with parameters
           command: | # poetry install --no-ansi due to cleo issue for petry >1.2.2 and circle python images < 3.11 https://github.com/python-poetry/poetry/issues/7184
             sudo apt-get update
             sudo apt-get install -y python3-pip
-            sudo pip install 'poetry==1.4.0'
-            poetry install --no-ansi
+            sudo pip install --user --upgrade setuptools wheel twine
+            sudo pip install pytest pytest-cov ipython icecream
+            
 
 jobs:
   test-py37: &test-template
@@ -18,7 +19,7 @@ jobs:
       - prepare_env
       - run:
           command: |
-            poetry run pytest simpleregex/tests/
+            pytest simpleregex/tests/
 
   test-py38:
     <<: *test-template
@@ -48,11 +49,8 @@ jobs:
       - prepare_env
       - run:
           command: |
-              poetry config repositories.test-pypi https://test.pypi.org/legacy/
-              poetry config pypi-token.test-pypi $TEST_PYPI_TOKEN
-              poetry version "$(poetry version -s).dev.${CIRCLE_BUILD_NUM}"
-              poetry build
-              poetry publish -r test-pypi
+              python3 -m build .
+              python3 -m twine upload -r pypi/testpypi dist/*
 
   pypi_publish:
     docker:
@@ -62,9 +60,8 @@ jobs:
       - prepare_env
       - run:
           command: |
-              poetry config pypi-token.pypi $PYPI_TOKEN
-              poetry build
-              poetry publish
+              python3 -m build .
+              python3 -m twine upload -r pypi/testpypi dist/*
 
 workflows:
   main:

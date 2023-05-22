@@ -1,25 +1,25 @@
-<div style="text-align: center;">
+<div align="center">
   <h1>Simple RegEx</h1>
 </div>
 
-<div style="text-align: center;">
+<div align="center">
     <image src="https://circleci.com/gh/netguru/SimpleRegEx.svg?style=svg"></image>
 </div>
 
-<div style="text-align: center;">
+<div align="center">
   <br/>
 <em>Brought with</em>&nbsp;❤️&nbsp;<em>by</em>&nbsp;
 <a href="https://www.netguru.com">
-<img style="vertical-align:middle" alt="Netguru logo" src='./docs/readme_netguru_logo.png' width='30'/></a>
+<img align="center" alt="Netguru logo" src='./docs/readme_netguru_logo.png' width='30'/></a>
 </div>
 
 # Introduction
 
-<p style="text-align: center;">
+<p align="center">
   Readability counts. Even in regex.
 </p>
 
-<div style="text-align: center;">
+<div align="center">
 
 [Documentation](./docs/index.md) &nbsp;|&nbsp;
 [About](#about) &nbsp;|&nbsp;
