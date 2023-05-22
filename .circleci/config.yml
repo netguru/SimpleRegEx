@@ -52,6 +52,7 @@ jobs:
       - prepare_env
       - run:
           command: |
+            . venv/bin/activate
             python3 -m build .
             python3 -m twine upload -r testpypi dist/*
 
@@ -63,6 +64,7 @@ jobs:
       - prepare_env
       - run:
           command: |
+            . venv/bin/activate
             python3 -m build .
             python3 -m twine upload -r pypi dist/*
 
