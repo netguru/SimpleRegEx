@@ -59,23 +59,22 @@ workflows:
             tags:
               only: /^v\d+\.\d+\.\d+$/
       - pypi_publish:
+          name: testpypi_publish
           requires:
             - hold
           filters:
             branches:
               only:
                 - main
-          pypi_token: TEST_PYPI_TOKEN
+          pypi_token: $TEST_PYPI_TOKEN
           destination: testpypi
-#      - pypi_publish:
-#          requires:
-#            - hold
-#          filters:
-#            tags:
-#              only: /^v\d+\.\d+\.\d+$/
-#            branches:
-#              ignore: /.*/
-#          matrix:
-#            parameters:
-#              pypi_token: $PYPI_TOKEN
-#              destination: "pypi"
+      - pypi_publish:
+          requires:
+            - hold
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
+          pypi_token: $PYPI_TOKEN
+          destination: pypi
