@@ -27,7 +27,7 @@ jobs:
   test:
     parameters:
       docker:
-        type: executor
+        type: string
       steps:
         - checkout
         - prepare_env
