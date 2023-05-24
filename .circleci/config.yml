@@ -28,6 +28,7 @@ jobs:
     parameters:
       docker_version:
         type: string
+        default: ["cimg/python:3.7", "cimg/python:3.8", "cimg/python:3.9", "cimg/python:3.10", "cimg/python:3.11"]
     docker:
       - image: << parameters.docker_version >>
     steps:
@@ -67,10 +68,7 @@ jobs:
 workflows:
   main:
     jobs:
-      - test:
-          matrix:
-            parameters:
-              docker_version: ["cimg/python:3.7", "cimg/python:3.8", "cimg/python:3.9", "cimg/python:3.10", "cimg/python:3.11"]
+      - test
       - hold:
           type: approval
           requires:
