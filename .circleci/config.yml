@@ -68,7 +68,7 @@ workflows:
           matrix:
             parameters:
               pypi_token: TEST_PYPI_TOKEN
-              destination: "testpypi"
+              destination: testpypi
 #      - pypi_publish:
 #          requires:
 #            - hold
