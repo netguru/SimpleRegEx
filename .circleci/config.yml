@@ -2,14 +2,13 @@ version: 2.1
 commands:
   prepare_env:
     steps:
-      - run:
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y python3-pip
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install --upgrade pip
-            pip install --upgrade setuptools wheel twine build pytest pytest-cov ipython icecream
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          python3 -m venv venv
+          . venv/bin/activate
+          pip install --upgrade pip
+          pip install --upgrade setuptools wheel twine build pytest pytest-cov ipython icecream
 
 jobs:
   test:
@@ -21,10 +20,9 @@ jobs:
     steps:
       - checkout
       - prepare_env
-      - run:
-          command: |
-            . venv/bin/activate
-            pytest simpleregex/tests/
+      - run: |
+          . venv/bin/activate
+          pytest simpleregex/tests/
   pypi_publish:
     parameters:
       pypi_token:
