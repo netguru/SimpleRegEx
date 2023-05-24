@@ -58,7 +58,7 @@ workflows:
                 - main
             tags:
               only: /^v\d+\.\d+\.\d+$/
-      - test_pypi_publish:
+      - pypi_publish:
           requires:
             - hold
           filters:
