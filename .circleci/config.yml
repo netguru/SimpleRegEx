@@ -65,10 +65,8 @@ workflows:
             branches:
               only:
                 - main
-          matrix:
-            parameters:
-              pypi_token: TEST_PYPI_TOKEN
-              destination: testpypi
+          pypi_token: TEST_PYPI_TOKEN
+          destination: testpypi
 #      - pypi_publish:
 #          requires:
 #            - hold
