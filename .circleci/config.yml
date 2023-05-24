@@ -25,7 +25,6 @@ jobs:
           command: |
             . venv/bin/activate
             pytest simpleregex/tests/
-
   pypi_publish:
     parameters:
       pypi_token:
@@ -58,7 +57,6 @@ workflows:
             branches:
               only:
                 - main
-                - bugfix/BN-4517
             tags:
               only: /^v\d+\.\d+\.\d+$/
       - pypi_publish:
@@ -69,7 +67,6 @@ workflows:
             branches:
               only:
                 - main
-                - bugfix/BN-4517
           pypi_token: $TEST_PYPI_TOKEN
           destination: testpypi
       - pypi_publish:
