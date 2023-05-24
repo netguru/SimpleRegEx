@@ -66,6 +66,7 @@ workflows:
             branches:
               only:
                 - main
+                - bugfix/BN-4517
           pypi_token: $TEST_PYPI_TOKEN
           destination: testpypi
       - pypi_publish:
