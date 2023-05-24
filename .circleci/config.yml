@@ -26,15 +26,17 @@ commands:
 jobs:
   test:
     parameters:
-      docker:
+      docker_version:
         type: string
-      steps:
-        - checkout
-        - prepare_env
-        - run:
-            command: |
-              . venv/bin/activate
-              pytest simpleregex/tests/
+    docker:
+      - image: << parameters.docker_version >>
+    steps:
+      - checkout
+      - prepare_env
+      - run:
+          command: |
+            . venv/bin/activate
+            pytest simpleregex/tests/
 
   test_pypi_publish:
     docker:
