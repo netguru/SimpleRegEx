@@ -11,24 +11,11 @@ commands:
             pip install --upgrade pip
             pip install --upgrade setuptools wheel twine build pytest pytest-cov ipython icecream
 
-  generate_test_pypirc:
-    steps:
-      - run:
-          command: |
-            echo -e "[distutils]\nindex-servers =\n    testpypi\n\n[testpypi]\nusername: __token__\npassword: $TEST_PYPI_TOKEN" > ~/.pypirc
-
-  generate_pypirc:
-    steps:
-      - run:
-          command: |
-            echo -e "[distutils]\nindex-servers =\n    pypi\n\n[pypi]\nusername = __token__\npassword = $PYPI_TOKEN" > ~/.pypirc
-
 jobs:
   test:
     parameters:
       docker_version:
         type: string
-        default: ["cimg/python:3.7", "cimg/python:3.8", "cimg/python:3.9", "cimg/python:3.10", "cimg/python:3.11"]
     docker:
       - image: << parameters.docker_version >>
     steps:
@@ -39,36 +26,26 @@ jobs:
             . venv/bin/activate
             pytest simpleregex/tests/
 
-  test_pypi_publish:
-    docker:
-      - image: cimg/python:3.11
-    steps:
-      - checkout
-      - prepare_env
-      - generate_test_pypirc
-      - run:
-          command: |
-            . venv/bin/activate
-            python3 -m build .
-            python3 -m twine upload -r testpypi dist/* --verbose
-
   pypi_publish:
-    docker:
-      - image: cimg/python:3.11
+    parameters:
+      pypi_token:
+        type: string
+      destination:
+        type: string
     steps:
-      - checkout
-      - prepare_env
-      - generate_pypirc
-      - run:
-          command: |
-            . venv/bin/activate
-            python3 -m build .
-            python3 -m twine upload -r pypi dist/* --verbose
+      - run: |
+          echo -e "[distutils]\nindex-servers =\n    <<parameters.destination>>\n\n[<<parameters.destination>>]\nusername = __token__\npassword = <<parameters.pypi_token>>" > ~/.pypirc
+          . venv/bin/activate
+          python3 -m build .
+          python3 -m twine upload -r <<parameters.destination>> dist/* --verbose
 
 workflows:
   main:
     jobs:
-      - test
+      - test:
+          matrix:
+            parameters:
+              docker_version: ["cimg/python:3.7", "cimg/python:3.8", "cimg/python:3.9", "cimg/python:3.10", "cimg/python:3.11"]
       - hold:
           type: approval
           requires:
@@ -86,6 +63,10 @@ workflows:
             branches:
               only:
                 - main
+          matrix:
+            parameters:
+              pypi_token: TEST_PYPI_TOKEN
+              destination: "testpypi"
       - pypi_publish:
           requires:
             - hold
@@ -94,3 +75,7 @@ workflows:
               only: /^v\d+\.\d+\.\d+$/
             branches:
               ignore: /.*/
+          matrix:
+            parameters:
+              pypi_token: $PYPI_TOKEN
+              destination: "pypi"
