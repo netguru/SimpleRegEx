@@ -69,15 +69,15 @@ workflows:
             parameters:
               pypi_token: TEST_PYPI_TOKEN
               destination: "testpypi"
-      - pypi_publish:
-          requires:
-            - hold
-          filters:
-            tags:
-              only: /^v\d+\.\d+\.\d+$/
-            branches:
-              ignore: /.*/
-          matrix:
-            parameters:
-              pypi_token: $PYPI_TOKEN
-              destination: "pypi"
+#      - pypi_publish:
+#          requires:
+#            - hold
+#          filters:
+#            tags:
+#              only: /^v\d+\.\d+\.\d+$/
+#            branches:
+#              ignore: /.*/
+#          matrix:
+#            parameters:
+#              pypi_token: $PYPI_TOKEN
+#              destination: "pypi"
