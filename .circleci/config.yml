@@ -62,6 +62,8 @@ workflows:
           filters:
             tags:
               only: /^v\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
       - pypi_publish:
           name: testpypi_publish
           requires:
