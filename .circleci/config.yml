@@ -23,6 +23,9 @@ jobs:
       - run: |
           . venv/bin/activate
           pytest simpleregex/tests/
+    filters:
+      tags:
+        only: /^v\d+\.\d+\.\d+$/
   pypi_publish:
     parameters:
       pypi_token:
