@@ -56,7 +56,7 @@ workflows:
               only:
                 - main
             tags:
-              only: /^v\d+\.\d+\.\d+$/
+              only: ^v\d+\.\d+\.\d+$
       - pypi_publish:
           name: testpypi_publish
           requires:
@@ -72,7 +72,7 @@ workflows:
             - hold
           filters:
             tags:
-              only: /^v\d+\.\d+\.\d+$/
+              only: ^v\d+\.\d+\.\d+$
             branches:
               ignore: /.*/
           pypi_token: $PYPI_TOKEN
