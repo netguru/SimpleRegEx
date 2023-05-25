@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup_info = dict(
     name="simpleregex",
-    version="0.1.8",
+    version="0.1.9",
     author="Netguru",
     author_email="hello@netguru.com",
     url="https://github.com/netguru/SimpleRegEx",
