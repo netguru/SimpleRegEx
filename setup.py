@@ -3,13 +3,13 @@ from setuptools import setup
 
 setup_info = dict(
     name="simpleregex",
-    version="0.1.5",
+    version="0.1.6",
     author="Netguru",
     author_email="hello@netguru.com",
     url="https://github.com/netguru/SimpleRegEx",
-    download_url="https://test.pypi.org/project/simpleregex/",
+    download_url="https://pypi.org/project/simpleregex/",
     project_urls={
-        "Documentation": "https://github.com/netguru/SimpleRegEx/blob/dev/docs/index.md",
+        "Documentation": "https://github.com/netguru/SimpleRegEx/blob/main/docs/index.md",
         "Source": "https://github.com/netguru/SimpleRegEx",
         "Tracker": "https://github.com/netguru/SimpleRegEx/issues",
     },
