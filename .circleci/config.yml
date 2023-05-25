@@ -55,6 +55,7 @@ workflows:
             branches:
               only:
                 - main
+                - bugfix/img_loading
             tags:
               only: /^v\d+\.\d+\.\d+$/
       - pypi_publish:
@@ -65,6 +66,7 @@ workflows:
             branches:
               only:
                 - main
+                - bugfix/img_loading
           pypi_token: $TEST_PYPI_TOKEN
           destination: testpypi
       - pypi_publish:
