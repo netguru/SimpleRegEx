@@ -47,7 +47,7 @@ workflows:
           matrix:
             parameters:
               docker_version: ["cimg/python:3.7", "cimg/python:3.8", "cimg/python:3.9", "cimg/python:3.10", "cimg/python:3.11"]
-      - hold:
+      - testpypi_publish_hold:
           type: approval
           requires:
             - test
@@ -55,12 +55,19 @@ workflows:
             branches:
               only:
                 - main
+      - pypi_publish_hold:
+          type: approval
+          requires:
+            - test
+          filters:
             tags:
-              only: ^v\d+\.\d+\.\d+$
+              only: /^v\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
       - pypi_publish:
           name: testpypi_publish
           requires:
-            - hold
+            - testpypi_publish_hold
           filters:
             branches:
               only:
@@ -69,10 +76,10 @@ workflows:
           destination: testpypi
       - pypi_publish:
           requires:
-            - hold
+            - pypi_publish_hold
           filters:
             tags:
-              only: ^v\d+\.\d+\.\d+$
+              only: /^v\d+\.\d+\.\d+$/
             branches:
               ignore: /.*/
           pypi_token: $PYPI_TOKEN
