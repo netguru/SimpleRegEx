@@ -10,7 +10,7 @@
   <br/>
 <em>Brought with</em>&nbsp;❤️&nbsp;<em>by</em>&nbsp;
 <a href="https://www.netguru.com">
-<img align="center" alt="Netguru logo" src='https://github.com/netguru/SimpleRegEx/blob/main/docs/readme_netguru_logo.png' width='30'/></a>
+<img align="center" alt="Netguru logo" src='https://raw.githubusercontent.com/netguru/SimpleRegEx/main/docs/readme_netguru_logo.png' width='30'/></a>
 </div>
 
 # Introduction
