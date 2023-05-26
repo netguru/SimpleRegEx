@@ -37,11 +37,14 @@ jobs:
     steps:
       - checkout
       - prepare_env
-      - run: |
-          echo -e "[distutils]\nindex-servers =\n    <<parameters.destination>>\n\n[<<parameters.destination>>]\nusername = __token__\npassword = <<parameters.pypi_token>>" > ~/.pypirc
-          . venv/bin/activate
-          python3 -m build .
-          python3 -m twine upload -r <<parameters.destination>> dist/* --verbose
+      - when:
+          condition: << pipeline.parameters.pypi_publish >>
+          steps:
+            - run: |
+                echo -e "[distutils]\nindex-servers =\n    <<parameters.destination>>\n\n[<<parameters.destination>>]\nusername = __token__\npassword = <<parameters.pypi_token>>" > ~/.pypirc
+                . venv/bin/activate
+                python3 -m build .
+                python3 -m twine upload -r <<parameters.destination>> dist/* --verbose
     docker:
       - image: cimg/python:3.11
 
@@ -64,8 +67,6 @@ workflows:
               only:
                 - main
                 - feature/paramatrize-pypi-upload
-          when:
-            condition: << pipeline.parameters.pypi_publish >>
       - pypi_publish_hold:
           type: approval
           requires:
@@ -83,6 +84,7 @@ workflows:
             branches:
               only:
                 - main
+                - feature/paramatrize-pypi-upload
           pypi_token: $TEST_PYPI_TOKEN
           destination: testpypi
       - pypi_publish:
