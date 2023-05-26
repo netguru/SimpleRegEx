@@ -12,10 +12,10 @@ commands:
 
 parameters:
   pypi_publish:
-    type: string
+    type: boolean
     default: "false"
   testpypi_publish:
-    type: string
+    type: boolean
     default: "false"
 
 jobs:
@@ -52,8 +52,8 @@ workflows:
   test:
     when:
       and:
-        - matches: { pattern: "false", value: << pipeline.parameters.pypi_publish >> }
-        - matches: { pattern: "false", value: << pipeline.parameters.testpypi_publish >> }
+        - not: << pipeline.parameters.pypi_publish >>
+        - not: << pipeline.parameters.testpypi_publish >>
     jobs:
       - test:
           matrix:
@@ -62,7 +62,7 @@ workflows:
   test_and_testpypi_publish:
     when:
       or:
-        - matches: { pattern: "true", value: << pipeline.parameters.testpypi_publish >> }
+        - << pipeline.parameters.testpypi_publish >>
     jobs:
       - test:
           matrix:
@@ -81,7 +81,7 @@ workflows:
   test_and_pypi_publish:
     when:
       or:
-        - matches: { pattern: "true", value: << pipeline.parameters.pypi_publish >> }
+        - << pipeline.parameters.pypi_publish >>
     jobs:
       - test:
           matrix:
