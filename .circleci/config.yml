@@ -64,8 +64,8 @@ workflows:
               only:
                 - main
                 - feature/paramatrize-pypi-upload
-          unless:
-            when: << pipeline.parameters.testpypi_publish >>
+          when:
+            condition: << pipeline.parameters.pypi_publish >>
       - pypi_publish_hold:
           type: approval
           requires:
