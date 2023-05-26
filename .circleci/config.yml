@@ -49,47 +49,46 @@ jobs:
       - image: cimg/python:3.11
 
 workflows:
-  main:
+  test:
     jobs:
       - test:
           matrix:
             parameters:
               docker_version: ["cimg/python:3.7", "cimg/python:3.8", "cimg/python:3.9", "cimg/python:3.10", "cimg/python:3.11"]
-          filters:
-            tags:
-              only: /^v\d+\.\d+\.\d+$/
-      - hold_testpypi_publish:
+  test_and_testpypi_publish:
+    when:
+      or:
+        - matches: { pattern: "true", value: << pipeline.parameters.testpypi_publish >> }
+    jobs:
+      - test:
+          matrix:
+            parameters:
+              docker_version: [ "cimg/python:3.7", "cimg/python:3.8", "cimg/python:3.9", "cimg/python:3.10", "cimg/python:3.11" ]
+      - testpypi_publish_hold:
           type: approval
-          when:
-            or:
-              - condition: << pipeline.parameters.testpypi_publish >>
           requires:
             - test
-          filters:
-            branches:
-              only:
-                - main
-                - feature/paramatrize-pypi-upload
-      - hold_pypi_publish:
-          type: approval
-          when:
-            or:
-              - condition: << pipeline.parameters.testpypi_publish >>
-          requires:
-            - test
-          filters:
-            branches:
-              only:
-                - main
-                - feature/paramatrize-pypi-upload
       - pypi_publish:
           name: testpypi_publish
           requires:
-            - hold_testpypi_publish
+            - testpypi_publish_hold
           pypi_token: $TEST_PYPI_TOKEN
           destination: testpypi
+  test_and_pypi_publish:
+    when:
+      or:
+        - matches: { pattern: "true", value: << pipeline.parameters.pypi_publish >> }
+    jobs:
+      - test:
+          matrix:
+            parameters:
+              docker_version: [ "cimg/python:3.7", "cimg/python:3.8", "cimg/python:3.9", "cimg/python:3.10", "cimg/python:3.11" ]
+      - pypi_publish_hold:
+          type: approval
+          requires:
+            - test
       - pypi_publish:
           requires:
-            - hold_pypi_publish
+            - pypi_publish_hold
           pypi_token: $PYPI_TOKEN
           destination: pypi
