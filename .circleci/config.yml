@@ -14,6 +14,9 @@ parameters:
   pypi_publish:
     type: boolean
     default: false
+  testpypi_publish:
+    type: boolean
+    default: false
 
 jobs:
   test:
@@ -30,21 +33,18 @@ jobs:
           pytest simpleregex/tests/
   pypi_publish:
     parameters:
-        pypi_token:
-          type: string
-        destination:
-          type: string
+      pypi_token:
+        type: string
+      destination:
+        type: string
     steps:
       - checkout
-      - when:
-          condition: << pipeline.parameters.pypi_publish >>
-          steps:
-            - prepare_env
-            - run: |
-                echo -e "[distutils]\nindex-servers =\n    <<parameters.destination>>\n\n[<<parameters.destination>>]\nusername = __token__\npassword = <<parameters.pypi_token>>" > ~/.pypirc
-                . venv/bin/activate
-                python3 -m build .
-                python3 -m twine upload -r <<parameters.destination>> dist/* --verbose
+      - prepare_env
+      - run: |
+          echo -e "[distutils]\nindex-servers =\n    <<parameters.destination>>\n\n[<<parameters.destination>>]\nusername = __token__\npassword = <<parameters.pypi_token>>" > ~/.pypirc
+          . venv/bin/activate
+          python3 -m build .
+          python3 -m twine upload -r <<parameters.destination>> dist/* --verbose
     docker:
       - image: cimg/python:3.11
 
@@ -58,9 +58,10 @@ workflows:
           filters:
             tags:
               only: /^v\d+\.\d+\.\d+$/
-      - pypi_publish:
+      - hold_testpypi_publish:
           type: approval
-          name: testpypi_publish
+          when:
+            condition: << pipeline.parameters.testpypi_publish >>
           requires:
             - test
           filters:
@@ -68,18 +69,25 @@ workflows:
               only:
                 - main
                 - feature/paramatrize-pypi-upload
+      - hold_pypi_publish:
+          type: approval
+          when:
+            condition: << pipeline.parameters.pypi_publish >>
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - main
+                - feature/paramatrize-pypi-upload
+      - pypi_publish:
+          name: testpypi_publish
+          requires:
+            - hold_testpypi_publish
           pypi_token: $TEST_PYPI_TOKEN
           destination: testpypi
       - pypi_publish:
-          type: approval
           requires:
-            - test
-          filters:
-            tags:
-              only: /^v\d+\.\d+\.\d+$/
-            branches:
-              only:
-                - main
-                - feature/paramatrize-pypi-upload
+            - hold_pypi_publish
           pypi_token: $PYPI_TOKEN
           destination: pypi
