@@ -50,6 +50,10 @@ jobs:
 
 workflows:
   test:
+    when:
+      and:
+        - matches: { pattern: "false", value: << pipeline.parameters.pypi_publish >> }
+        - matches: { pattern: "false", value: << pipeline.parameters.testpypi_publish >> }
     jobs:
       - test:
           matrix:
