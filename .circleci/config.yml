@@ -61,7 +61,8 @@ workflows:
       - hold_testpypi_publish:
           type: approval
           when:
-            condition: << pipeline.parameters.testpypi_publish >>
+            or:
+              - condition: << pipeline.parameters.testpypi_publish >>
           requires:
             - test
           filters:
@@ -72,7 +73,8 @@ workflows:
       - hold_pypi_publish:
           type: approval
           when:
-            condition: << pipeline.parameters.pypi_publish >>
+            or:
+              - condition: << pipeline.parameters.testpypi_publish >>
           requires:
             - test
           filters:
