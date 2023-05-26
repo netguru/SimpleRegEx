@@ -14,18 +14,12 @@ parameters:
   testpypi_publish:
     type: boolean
     default: false
-  docker_version:
-    type: string
-    default: cimg/python:3.11
-  pypi_token:
-    type: string
-    default: $TEST_PYPI_TOKEN
-  destination:
-    type: string
-    default: testpypi
 
 jobs:
   test:
+    parameters:
+      docker_version:
+        type: string
     docker:
       - image: << parameters.docker_version >>
     steps:
@@ -35,6 +29,11 @@ jobs:
           . venv/bin/activate
           pytest simpleregex/tests/
   pypi_publish:
+    parameters:
+        pypi_token:
+            type: string
+        destination:
+            type: string
     steps:
       - checkout
       - prepare_env
