@@ -10,6 +10,11 @@ commands:
           pip install --upgrade pip
           pip install --upgrade setuptools wheel twine build pytest pytest-cov ipython icecream
 
+parameters:
+  pypi_publish:
+    type: boolean
+    default: false
+
 jobs:
   test:
     parameters:
@@ -29,14 +34,11 @@ jobs:
           type: string
         destination:
           type: string
-        pypi_publish:
-          type: boolean
-          default: false
     steps:
       - checkout
       - prepare_env
       - when:
-          condition: << parameters.pypi_publish >>
+          condition: << pipeline.parameters.pypi_publish >>
           steps:
             - run: |
                 echo -e "[distutils]\nindex-servers =\n    <<parameters.destination>>\n\n[<<parameters.destination>>]\nusername = __token__\npassword = <<parameters.pypi_token>>" > ~/.pypirc
