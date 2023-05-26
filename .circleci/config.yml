@@ -58,16 +58,7 @@ workflows:
           filters:
             tags:
               only: /^v\d+\.\d+\.\d+$/
-      - testpypi_publish_hold:
-          type: approval
-          requires:
-            - test
-          filters:
-            branches:
-              only:
-                - main
-                - feature/paramatrize-pypi-upload
-      - pypi_publish_hold:
+      - hold:
           type: approval
           requires:
             - test
@@ -75,11 +66,13 @@ workflows:
             tags:
               only: /^v\d+\.\d+\.\d+$/
             branches:
-              ignore: /.*/
+              only:
+                - main
+                - feature/paramatrize-pypi-upload
       - pypi_publish:
           name: testpypi_publish
           requires:
-            - testpypi_publish_hold
+            - hold
           filters:
             branches:
               only:
@@ -89,7 +82,7 @@ workflows:
           destination: testpypi
       - pypi_publish:
           requires:
-            - pypi_publish_hold
+            - hold
           filters:
             tags:
               only: /^v\d+\.\d+\.\d+$/
