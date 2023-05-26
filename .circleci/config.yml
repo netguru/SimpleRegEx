@@ -87,6 +87,8 @@ workflows:
             tags:
               only: /^v\d+\.\d+\.\d+$/
             branches:
-              ignore: /.*/
+              only:
+                - main
+                - feature/paramatrize-pypi-upload
           pypi_token: $PYPI_TOKEN
           destination: pypi
