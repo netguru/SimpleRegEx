@@ -61,7 +61,9 @@ workflows:
             - test
           filters:
             branches:
-              only: main
+              only:
+                - main
+                - feature/paramatrize-pypi-upload
           unless: << pipeline.parameters.testpypi_publish >>
       - pypi_publish_hold:
           type: approval
