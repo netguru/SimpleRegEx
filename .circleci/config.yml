@@ -10,11 +10,19 @@ commands:
           pip install --upgrade pip
           pip install --upgrade setuptools wheel twine build pytest pytest-cov ipython icecream
 
+parameters:
+  testpypi_publish:
+    type: boolean
+    default: false
+  docker_version:
+    type: string
+  pypi_token:
+    type: string
+  destination:
+    type: string
+
 jobs:
   test:
-    parameters:
-      docker_version:
-        type: string
     docker:
       - image: << parameters.docker_version >>
     steps:
@@ -24,11 +32,6 @@ jobs:
           . venv/bin/activate
           pytest simpleregex/tests/
   pypi_publish:
-    parameters:
-      pypi_token:
-        type: string
-      destination:
-        type: string
     steps:
       - checkout
       - prepare_env
@@ -56,8 +59,8 @@ workflows:
             - test
           filters:
             branches:
-              only:
-                - main
+              only: main
+          unless: << pipeline.parameters.testpypi_publish >>
       - pypi_publish_hold:
           type: approval
           requires:
