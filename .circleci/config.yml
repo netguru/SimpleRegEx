@@ -58,21 +58,11 @@ workflows:
           filters:
             tags:
               only: /^v\d+\.\d+\.\d+$/
-      - hold:
-          type: approval
-          requires:
-            - test
-          filters:
-            tags:
-              only: /^v\d+\.\d+\.\d+$/
-            branches:
-              only:
-                - main
-                - feature/paramatrize-pypi-upload
       - pypi_publish:
+          type: approval
           name: testpypi_publish
           requires:
-            - hold
+            - test
           filters:
             branches:
               only:
@@ -81,8 +71,9 @@ workflows:
           pypi_token: $TEST_PYPI_TOKEN
           destination: testpypi
       - pypi_publish:
+          type: approval
           requires:
-            - hold
+            - test
           filters:
             tags:
               only: /^v\d+\.\d+\.\d+$/
