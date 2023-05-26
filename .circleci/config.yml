@@ -16,10 +16,13 @@ parameters:
     default: false
   docker_version:
     type: string
+    default: cimg/python:3.11
   pypi_token:
     type: string
+    default: $TEST_PYPI_TOKEN
   destination:
     type: string
+    default: testpypi
 
 jobs:
   test:
