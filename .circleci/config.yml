@@ -12,10 +12,10 @@ commands:
 
 parameters:
   pypi_publish:
-    type: boolean
+    type: string
     default: false
   testpypi_publish:
-    type: boolean
+    type: string
     default: false
 
 jobs:
