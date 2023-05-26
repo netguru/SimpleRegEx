@@ -35,10 +35,10 @@ jobs:
         destination:
           type: string
     steps:
+      - checkout
       - when:
           condition: << pipeline.parameters.pypi_publish >>
           steps:
-            - checkout
             - prepare_env
             - run: |
                 echo -e "[distutils]\nindex-servers =\n    <<parameters.destination>>\n\n[<<parameters.destination>>]\nusername = __token__\npassword = <<parameters.pypi_token>>" > ~/.pypirc
