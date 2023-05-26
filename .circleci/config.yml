@@ -10,6 +10,14 @@ commands:
           pip install --upgrade pip
           pip install --upgrade setuptools wheel twine build pytest pytest-cov ipython icecream
 
+parameters:
+  pypi_publish:
+    type: boolean
+    default: false
+  testpypi_publish:
+    type: boolean
+    default: false
+
 jobs:
   test:
     parameters:
@@ -41,49 +49,50 @@ jobs:
       - image: cimg/python:3.11
 
 workflows:
-  main:
+  test:
+    when:
+      and:
+        - not: << pipeline.parameters.pypi_publish >>
+        - not: << pipeline.parameters.testpypi_publish >>
     jobs:
       - test:
           matrix:
             parameters:
               docker_version: ["cimg/python:3.7", "cimg/python:3.8", "cimg/python:3.9", "cimg/python:3.10", "cimg/python:3.11"]
-          filters:
-            tags:
-              only: /^v\d+\.\d+\.\d+$/
+  test_and_testpypi_publish:
+    when:
+      or:
+        - << pipeline.parameters.testpypi_publish >>
+    jobs:
+      - test:
+          matrix:
+            parameters:
+              docker_version: [ "cimg/python:3.7", "cimg/python:3.8", "cimg/python:3.9", "cimg/python:3.10", "cimg/python:3.11" ]
       - testpypi_publish_hold:
           type: approval
           requires:
             - test
-          filters:
-            branches:
-              only:
-                - main
-      - pypi_publish_hold:
-          type: approval
-          requires:
-            - test
-          filters:
-            tags:
-              only: /^v\d+\.\d+\.\d+$/
-            branches:
-              ignore: /.*/
       - pypi_publish:
           name: testpypi_publish
           requires:
             - testpypi_publish_hold
-          filters:
-            branches:
-              only:
-                - main
           pypi_token: $TEST_PYPI_TOKEN
           destination: testpypi
+  test_and_pypi_publish:
+    when:
+      or:
+        - << pipeline.parameters.pypi_publish >>
+    jobs:
+      - test:
+          matrix:
+            parameters:
+              docker_version: [ "cimg/python:3.7", "cimg/python:3.8", "cimg/python:3.9", "cimg/python:3.10", "cimg/python:3.11" ]
+      - pypi_publish_hold:
+          type: approval
+          requires:
+            - test
       - pypi_publish:
           requires:
             - pypi_publish_hold
-          filters:
-            tags:
-              only: /^v\d+\.\d+\.\d+$/
-            branches:
-              ignore: /.*/
           pypi_token: $PYPI_TOKEN
           destination: pypi
