@@ -4,7 +4,7 @@ from simpleregex.func import none_or_many
 
 class TestNoneOrMany:
     def test_none(self):
-        assert none_or_many("a").compile().match("bbb")
+        assert not none_or_many("a").compile().match("bbb").group()
 
     def test_one(self):
         re_match = none_or_many("a").compile().search("abbb")
