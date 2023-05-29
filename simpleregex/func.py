@@ -64,7 +64,7 @@ def any_of_characters(regex_list: List[str]):
 
 def times(what: RegEx, min: int, max: int = None):
     """
-    Repeate a pattern between {min} and {max} times.
+    Repeat a pattern between {min} and {max} times.
     """
     what = ensure_regex(what)
     return what + (f"{{{min},}}" if max is None else f"{{{min},{max}}}")
@@ -72,7 +72,7 @@ def times(what: RegEx, min: int, max: int = None):
 
 def repeat(what: RegEx, count: int):
     """
-    Repeate a pattern {count} times.
+    Repeat a pattern {count} times.
     """
     return ensure_regex(what) + f"{{{count}}}"
 
