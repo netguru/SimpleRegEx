@@ -20,14 +20,14 @@ class TestAnyOfChar:
 
     def test_string(self):
         """
-        any_of_characters should also except string instead of list
+        any_of_characters should also accept string instead of list
         """
         re_match = any_of_characters("ab").compile().search("ZzAbaaabbbaaa")
         assert re_match[0] == "b"
 
     def test_with_regex_range(self):
         """
-        any_of_characters should also except regex range object
+        any_of_characters should also accept regex range object
         """
         regex = any_of_characters(
             [
@@ -47,7 +47,7 @@ class TestAnyOfChar:
 
     def test_with_regex_object(self):
         """
-        any_of_characters should also except regex object
+        any_of_characters should also accept regex object
         """
         regex = any_of_characters(
             [RegEx("a-z"), RegEx(["0", "-", "9"]), "-"]
