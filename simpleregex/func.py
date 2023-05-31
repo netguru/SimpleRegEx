@@ -72,7 +72,7 @@ def times(what: RegEx, min: int, max: int = None):
     return what + (f"{{{min},}}" if max is None else f"{{{min},{max}}}")
 
 
-def repeat(what: Union[RegEx, str], count: int):
+def repeat(what: RegEx, count: int):
     """
     Repeat a pattern {count} times.
     """
