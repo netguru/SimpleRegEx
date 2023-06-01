@@ -48,12 +48,17 @@ pip install simpleregex
 
 # Release
 
-To bump a package version use poetry. Examples can be found
-in [poetry docs](https://python-poetry.org/docs/cli/#version).
+To bump a package version go to [setup.py](https://github.com/netguru/SimpleRegEx/blob/main/setup.py) and
+change `version` variable.
 
-The release process is automated on circle ci.
-Merge to main branch will deploy automated release to test.pypi.org.
-To release the new package version to pypi.org create a tag for selected version `v\d+\.\d+\.\d+`.
+Create new release on GitHub and tag it with the same version as in `setup.py`.
+
+The release process to `testpypi` and `pypi` is manually triggered on CircleCi.
+After successful merge to main and creation of new release tag, go to
+[CircleCi](https://app.circleci.com/pipelines/github/netguru/SimpleRegEx?branch=main) and trigger new pipeline with
+following boolean parameters:
+- `pypi_publish: true` - this will push package to `pypi`
+- `testpypi_publish: true` - this will push package to `testpypi`
 
 # Support
 
