@@ -8,8 +8,14 @@ class TestNoneOrOne:
 
     def test_one(self):
         re_match = none_or_one("a").compile().search("abbb")
+
         assert re_match[0] == "a"
 
     def test_many(self):
         re_match = none_or_one("a").compile().search("aaabbb")
+
         assert re_match[0] == "a"
+
+        re_match = none_or_one("foo").compile().search("foofoobarbar")
+
+        assert re_match[0] == "foo"

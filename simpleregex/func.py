@@ -7,11 +7,13 @@ from simpleregex.models import RegEx
 
 
 def none_or_many(what: RegEx):
-    return ensure_regex(what) + "*"
+    what = ensure_regex(what)
+    return RegEx(_patterns=[f"({what.pattern})*"])
 
 
 def one_or_more(what: RegEx):
-    return ensure_regex(what) + "+"
+    what = ensure_regex(what)
+    return RegEx(_patterns=[f"({what.pattern})+"])
 
 
 def none_or_one(what: RegEx):
@@ -74,13 +76,14 @@ def repeat(what: RegEx, count: int):
     """
     Repeat a pattern {count} times.
     """
-    return ensure_regex(what) + f"{{{count}}}"
+    what = ensure_regex(what)
+    return RegEx(_patterns=[f"({what.pattern}){{{count}}}"])
 
 
 def negate(what: RegEx):
     """
     Negate either exact characters or ranges.
-    To Negate whole expressions use negative lookarounds.
+    To negate entire expressions, utilize negative lookarounds.
     """
     what = ensure_regex(what)
     if what._patterns[0] == "[":

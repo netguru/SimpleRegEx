@@ -21,14 +21,14 @@
 
 <div align="center">
 
-[Documentation](./docs/index.md) &nbsp;|&nbsp;
+[Documentation](https://github.com/netguru/SimpleRegEx/blob/main/docs/index.md) &nbsp;|&nbsp;
 [About](#about) &nbsp;|&nbsp;
 [Installation](#installation) &nbsp;|&nbsp;
-[Contributing](./docs/CONTRIBUTING.md) &nbsp;
+[Contributing](https://github.com/netguru/SimpleRegEx/blob/main/docs/CONTRIBUTING.md) &nbsp;
 
 </div>
 
-# About
+# <a name="about"></a>About
 
 This tool is a wrapper for RegEx in python (`import re`), which introduces pattern
 functions in place of unreadable text patterns.
@@ -40,7 +40,7 @@ This tool is inspired by the [Magic Regex](https://github.com/danielroe/magic-re
 Usage example can be found
 in [unit tests](https://github.com/netguru/SimpleRegEx/blob/main/simpleregex/tests/test_email.py).
 
-# Installation
+# <a name="installation"></a>Installation
 
 ```
 pip install simpleregex
